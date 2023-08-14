@@ -1,0 +1,93 @@
+<div class="container mx-auto mt-5">
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="flex justify-between px-3 pt-3">
+        <span class="p-card-title">
+          Szczegóły sprzętu {{ equipment?.name }}
+        </span>
+        <p-button [routerLink]="['../']" label="Powrót"></p-button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+      <ul class="mb-5 space-y-1 text-[#71717A] list-none list-inside">
+        <li>
+          <span class="font-semibold text-gray-600">ID:</span> {{ equipment?.id }}
+        </li>
+        <li>
+          <span class="font-semibold text-gray-600">Nazwa:</span> {{ equipment?.name }}
+        </li>
+        <li>
+          <span class="font-semibold text-gray-600">Kategoria:</span> {{ equipment?.category_name }}
+        </li>
+        <li>
+          <span class="font-semibold text-gray-600">Cena:</span> {{ equipment?.price }} zł
+        </li>
+        <li>
+          <span class="font-semibold text-gray-600">Opis:</span> {{ equipment?.description }}
+        </li>
+      </ul>
+
+      <div class="mb-2">
+        <span class="font-bold text-xl text-gray-600">Przedmioty</span>
+      </div>
+
+      <p-table #dt1 [value]="items" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-sm"
+        currentPageReportTemplate="pokazano {first} - {last} z {totalRecords}"
+        [globalFilterFields]="['serial_number', 'status', 'work_time']">
+        <ng-template pTemplate="caption">
+          <div class="flex justify-between">
+            <p-button (click)="showDialog()" label="Dodaj przedmiot" styleClass="p-button-success"
+              icon="pi pi-plus"></p-button>
+
+            <span class="p-input-icon-left ml-auto relative">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Szukaj" #globalFilter />
+              <i *ngIf="globalFilter.value != ''" class="pi pi-times absolute right-3 cursor-pointer text-[#71717A]"
+                (click)="clearGlobalFilter()"></i>
+            </span>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="id">
+              <div class="flex gap-1"># <p-sortIcon field="id"></p-sortIcon></div>
+            </th>
+            <th pSortableColumn="serial_number">
+              <div class="flex gap-1">Numer seryjny <p-sortIcon field="serial_number"></p-sortIcon></div>
+            </th>
+            <th pSortableColumn="status">
+              <div class="flex gap-1">Status <p-sortIcon field="status"></p-sortIcon></div>
+            </th>
+            <th pSortableColumn="work_time">
+              <div class="flex gap-1">Czas pracy <p-sortIcon field="work_time"></p-sortIcon></div>
+            </th>
+            <th><span>Opcje</span></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.serial_number}}</td>
+            <td>{{item.status | underlineToSpace}}</td>
+            <td>{{item.work_time}}</td>
+            <td class="p-buttonset whitespace-nowrap">
+              <button pButton pRipple icon="pi pi-trash" (click)="deleteItem(item)"
+                class="p-button-danger p-button-sm"></button>
+              <button pButton pRipple icon="pi pi-pencil" (click)="showDialog(item)"
+                class="p-button-info p-button-sm"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-template>
+  </p-card>
+</div>
+
+<div class="container mx-auto mt-5">
+
+</div>

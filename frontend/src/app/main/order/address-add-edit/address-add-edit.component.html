@@ -1,0 +1,35 @@
+<form (ngSubmit)="onSubmit(form)" #form="ngForm" class="space-y-6">
+  <div class="flex flex-col">
+    <label for="street_number" class="mb-2">Ulica i numer domu</label>
+
+    <input type="text" pInputText id="street_number" [(ngModel)]="address.street_number" name="street_number"
+      #street_number="ngModel" required />
+
+    <app-control-error [control]="street_number.control" [submitted]="form.submitted" name="ulica i numer domu">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="post_code" class="mb-2">Kod pocztowy</label>
+
+    <input type="text" pInputText id="post_code" [(ngModel)]="address.post_code" name="post_code" #post_code="ngModel"
+      required pattern="^\d{2}-\d{3}$" />
+
+    <app-control-error [control]="post_code.control" [submitted]="form.submitted" name="kod pocztowy">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="town" class="mb-2">Miejscowość</label>
+
+    <input type="text" pInputText id="town" [(ngModel)]="address.town" name="town" #town="ngModel" required />
+
+    <app-control-error [control]="town.control" [submitted]="form.submitted" name="miejscowość">
+    </app-control-error>
+  </div>
+
+  <div class="flex justify-end">
+    <p-button type="submit" label="Dodaj" *ngIf="!edit"></p-button>
+    <p-button type="submit" label="Aktualizuj" *ngIf="edit"></p-button>
+  </div>
+</form>

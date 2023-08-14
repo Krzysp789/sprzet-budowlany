@@ -1,0 +1,78 @@
+<div class="container mx-auto mt-5">
+  <p-card header="Wypożyczenia">
+    <p-table #dt1 [value]="rentals.data" [lazy]="true" (onLazyLoad)="loadRentals($event)" [paginator]="true"
+      [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-sm"
+      currentPageReportTemplate="pokazano {first} - {last} z {totalRecords}" [totalRecords]="rentals.total"
+      [loading]="loading" [globalFilterFields]="['customer.first_name', 'customer.last_name', 'total_amount', 'notes']">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-between">
+          <p-button (click)="showDialog()" label="Dodaj Wypożyczenie" styleClass="p-button-success"
+            icon="pi pi-plus"></p-button>
+
+          <span class="p-input-icon-left ml-auto relative">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="Szukaj" #globalFilter />
+            <i *ngIf="globalFilter.value != ''" class="pi pi-times absolute right-3 cursor-pointer text-[#71717A]"
+              (click)="clearGlobalFilter()"></i>
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">
+            <div class="flex gap-1"># <p-sortIcon field="id"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="customer.last_name">
+            <div class="flex gap-1">Klient <p-sortIcon field="customer.last_name"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="date_rental">
+            <div class="flex gap-1">Data wypożyczenia <p-sortIcon field="date_rental"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="total_amount">
+            <div class="flex gap-1">Całkowity koszt <p-sortIcon field="total_amount"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="status">
+            <div class="flex gap-1">Status <p-sortIcon field="status"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="delivery">
+            <div class="flex gap-1">Dostawa <p-sortIcon field="delivery"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="payment">
+            <div class="flex gap-1">płatność <p-sortIcon field="payment"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="paid">
+            <div class="flex gap-1">Opłacono <p-sortIcon field="paid"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="items.length">
+            <div class="flex gap-1">Wypożyczone przedmioty <p-sortIcon field="items.length"></p-sortIcon></div>
+          </th>
+          <th><span>Opcje</span></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-rental>
+        <tr>
+          <td>{{ rental.id }}</td>
+          <td>{{ rental.customer_first_name }} {{ rental.customer_last_name }}</td>
+          <td>{{ rental.date_rental | date:'shortDate'}}</td>
+          <td>{{ rental.total_price | currency }}</td>
+          <td>{{ rental.status | underlineToSpace }}</td>
+          <td>{{ rental.delivery | underlineToSpace }}</td>
+          <td>{{ rental.payment | underlineToSpace }}</td>
+          <td>{{ rental.paid | booleanToWord }}</td>
+          <td>{{ rental.items.length }}</td>
+          <td class="p-buttonset whitespace-nowrap">
+            <button pButton pRipple icon="pi pi-trash" (click)="deleteRental(rental)"
+              class="p-button-danger p-button-sm"></button>
+            <button pButton pRipple icon="pi pi-pencil" (click)="showDialog(rental)"
+              class="p-button-info p-button-sm"></button>
+            <button pButton pRipple icon="pi pi-info-circle" [routerLink]="[rental.id]"
+              class="p-button-warning p-button-sm"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

@@ -1,0 +1,52 @@
+<div *ngIf="rentals?.length == 0" class="container mx-auto mt-5">
+  <div class="flex flex-col items-center mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow">
+    <h5 class="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900">Brak wypożyczeń</h5>
+  </div>
+</div>
+
+<div *ngIf=" rentals && rentals.length > 0" class="container mx-auto mt-5">
+  <h3 class="text-4xl font-semibold mb-4">Twoje wypożyczenia</h3>
+
+  <div *ngFor="let rental of rentals">
+    <p-card styleClass="mb-2">
+      <ng-template pTemplate="header">
+        <div class="flex justify-between p-4">
+          <h4 class="p-card-title">Wypożyczenie nr {{ rental.id }}</h4>
+          <h4 class="p-card-title">Status: {{ rental.status }}</h4>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="content">
+        <div *ngFor="let equip of rental.equipment">
+          <hr class="h-px bg-gray-200 mb-4 border-0">
+          <div class="flex flex-row mb-4">
+            <div class="w-32">
+              <img src="/assets/images/koparka.svg" class="h-12 mr-3">
+            </div>
+            <div class="grow">
+              {{equip.name}}
+            </div>
+            <div class="w-40 flex">
+              <div class="my-auto">{{ equip?.quantity }} szt</div>
+            </div>
+            <div class="w-32 flex">
+              <div class="my-auto">{{ equip?.price | currency }} / szt</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="h-px my-2 bg-gray-200 border-0">
+
+        <div class="flex justify-between text-lg ">
+          <p class="mt-2">
+            wypożyczone od {{ rental?.date_rental | date:'shortDate' }} do {{ rental?.date_deadline | date:'shortDate'
+            }}
+          </p>
+          <p class="mt-2">
+            kwota łączna: {{ rental?.total_price | currency }}
+          </p>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

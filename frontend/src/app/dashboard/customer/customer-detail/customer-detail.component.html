@@ -1,0 +1,82 @@
+<div class="container mx-auto mt-5">
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="flex justify-between px-3 pt-3">
+        <span class="p-card-title">
+          Szczegóły klienta: {{customer?.first_name}} {{customer?.last_name}}
+        </span>
+        <p-button [routerLink]="['../']" label="Powrót"></p-button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+      <ul class="mb-5 space-y-1 text-[#71717A] list-none list-inside">
+        <li>
+          <span class="font-semibold text-gray-600">ID:</span> {{ customer?.id }}
+        </li>
+        <li>
+          <span class="font-semibold text-gray-600">Imie i nazwisko:</span> {{ customer?.first_name }}
+          {{ customer?.last_name }}
+        </li>
+        <li>
+          <span class="font-semibold text-gray-600">Nr telefonu:</span> {{ customer?.phone_no }}
+        </li>
+        <li>
+          <span class="font-semibold text-gray-600">Email:</span> {{ customer?.email }}
+        </li>
+        <li>
+          <span class="font-semibold text-gray-600">Uwagi:</span> {{ customer?.notes }}
+        </li>
+      </ul>
+
+      <div class="mb-2">
+        <span class="font-bold text-xl text-gray-600">Adresy</span>
+      </div>
+
+      <p-table #dt1 [value]="addresses" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-sm"
+        currentPageReportTemplate="pokazano {first} - {last} z {totalRecords}"
+        [globalFilterFields]="['street_number', 'post_code', 'town']">
+        <ng-template pTemplate="caption">
+          <div class="flex justify-between">
+            <p-button (click)="showDialog()" label="Dodaj adres" styleClass="p-button-success"
+              icon="pi pi-plus"></p-button>
+
+            <span class="p-input-icon-left ml-auto relative">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Szukaj" #globalFilter />
+              <i *ngIf="globalFilter.value != ''" class="pi pi-times absolute right-3 cursor-pointer text-[#71717A]"
+                (click)="clearGlobalFilter()"></i>
+            </span>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th>#</th>
+            <th>Ulica i numer domu</th>
+            <th>Kod pocztowy</th>
+            <th>miejscowość</th>
+            <th>Opcje</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-address>
+          <tr>
+            <td>{{address.id}}</td>
+            <td>{{address.street_number}}</td>
+            <td>{{address.post_code}}</td>
+            <td>{{address.town}}</td>
+            <td class="p-buttonset whitespace-nowrap">
+              <button pButton icon="pi pi-pencil" (click)="showDialog(address)"
+                class="p-button-info p-button-sm"></button>
+              <button pButton icon="pi pi-trash" (click)="deleteAddress(address)"
+                class="p-button-danger p-button-sm"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-template>
+  </p-card>
+</div>

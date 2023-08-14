@@ -1,0 +1,39 @@
+<form (ngSubmit)="onSubmit(form)" #form="ngForm" class="space-y-6">
+  <div class="flex flex-col">
+    <label for="serial_number" class="mb-2">Numer seryjny</label>
+
+    <input type="text" pInputText id="serial_number" name="serial_number" #serial_number="ngModel"
+      [(ngModel)]="item.serial_number" required [uniqueItem]="[itemSN, idEquipment]" />
+
+    <app-control-error [control]="serial_number.control" [submitted]="form.submitted" name="numer seryjny">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="status" class="mb-2">Status</label>
+
+    <p-dropdown [options]="itemStatusTable" inputId="status" [(ngModel)]="item.status" name="status" #status="ngModel"
+      optionLabel="displayName" optionValue="id" placeholder="Wybierz status" [showClear]="true" styleClass="w-full"
+      [required]="true" existItemStatus>
+    </p-dropdown>
+
+    <app-control-error [control]="status.control" [submitted]="form.submitted" name="status">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="work_time" class="mb-2">Czas pracy</label>
+
+    <p-inputNumber inputId="work_time" [(ngModel)]="item.work_time" name="work_time" #work_time="ngModel" locale="pl-PL"
+      styleClass="w-full" [required]="true" [min]="0">
+    </p-inputNumber>
+
+    <app-control-error [control]="work_time.control" [submitted]="form.submitted" name="czas pracy">
+    </app-control-error>
+  </div>
+
+  <div class="flex justify-end">
+    <p-button type="submit" label="Dodaj" *ngIf="!edit"></p-button>
+    <p-button type="submit" label="Aktualizuj" *ngIf="edit"></p-button>
+  </div>
+</form>

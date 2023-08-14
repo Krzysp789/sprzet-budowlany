@@ -1,0 +1,66 @@
+<div class="container mx-auto mt-5">
+  <p-card header="Klienci">
+    <p-table #dt1 [value]="customers.data" [lazy]="true" (onLazyLoad)="loadCustomers($event)" [paginator]="true"
+      [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-sm"
+      currentPageReportTemplate="pokazano {first} - {last} z {totalRecords}" [totalRecords]="customers.total"
+      [loading]="loading" [globalFilterFields]="['first_name', 'last_name', 'phone_no', 'email', 'notes']">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-between">
+          <p-button (click)="showDialog()" label="Dodaj klienta" styleClass="p-button-success"
+            icon="pi pi-plus"></p-button>
+
+          <span class="p-input-icon-left ml-auto relative">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="Szukaj" #globalFilter />
+            <i *ngIf="globalFilter.value != ''" class="pi pi-times absolute right-3 cursor-pointer text-[#71717A]"
+              (click)="clearGlobalFilter()"></i>
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">
+            <div class="flex gap-1"># <p-sortIcon field="id"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="first_name">
+            <div class="flex gap-1">Imie <p-sortIcon field="first_name"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="last_name">
+            <div class="flex gap-1">Nazwisko <p-sortIcon field="last_name"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="phone_no">
+            <div class="flex gap-1">Telefon <p-sortIcon field="phone_no"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="email">
+            <div class="flex gap-1">Email <p-sortIcon field="email"></p-sortIcon></div>
+          </th>
+          <th pSortableColumn="notes">
+            <div class="flex gap-1">Informacje <p-sortIcon field="notes"></p-sortIcon></div>
+          </th>
+          <th><span>Opcje</span></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-customer>
+        <tr>
+          <td>{{ customer.id }}</td>
+          <td>{{ customer.first_name }}</td>
+          <td>{{ customer.last_name }}</td>
+          <td>{{ customer.phone_no }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.notes }}</td>
+          <td class="p-buttonset whitespace-nowrap">
+            <button pButton pRipple icon="pi pi-trash" (click)="deleteCustomer(customer)"
+              class="p-button-danger p-button-sm"></button>
+            <button pButton pRipple icon="pi pi-pencil" (click)="showDialog(customer)"
+              class="p-button-info p-button-sm"></button>
+            <button pButton pRipple icon="pi pi-info-circle" [routerLink]="[customer.id]"
+              class="p-button-warning p-button-sm"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

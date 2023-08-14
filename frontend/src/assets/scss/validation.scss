@@ -1,0 +1,29 @@
+input.ng-invalid.ng-touched:not(:focus),
+select.ng-invalid.ng-touched:not(:focus),
+textarea.ng-invalid.ng-touched:not(:focus),
+:host ::ng-deep p-inputnumber.ng-invalid.ng-touched:not(:focus) input,
+:host ::ng-deep p-dropdown.ng-invalid.ng-touched:not(:focus) div.p-dropdown,
+form.ng-submitted input.ng-invalid:not(:focus),
+form.ng-submitted select.ng-invalid:not(:focus),
+form.ng-submitted textarea.ng-invalid:not(:focus),
+:host ::ng-deep form.ng-submitted p-inputnumber.ng-invalid:not(:focus) input,
+:host ::ng-deep form.ng-submitted p-dropdown.ng-invalid:not(:focus) div.p-dropdown {
+  color: rgb(127 29 29);
+  background-color: rgb(254 226 226);
+  border-color: rgb(248 113 113);
+}
+
+input.ng-valid.ng-touched:not(:focus),
+select.ng-valid.ng-touched:not(:focus),
+textarea.ng-valid.ng-touched:not(:focus),
+:host ::ng-deep p-inputnumber.ng-valid.ng-touched:not(:focus) input,
+:host ::ng-deep p-dropdown.ng-valid.ng-touched:not(:focus) div.p-dropdown,
+form.ng-submitted input.ng-valid:not(:focus),
+form.ng-submitted select.ng-valid:not(:focus),
+form.ng-submitted textarea.ng-valid:not(:focus),
+:host ::ng-deep form.ng-submitted p-inputnumber.ng-valid:not(:focus) input,
+:host ::ng-deep form.ng-submitted p-dropdown.ng-valid:not(:focus) div.p-dropdown {
+  color: rgb(20 83 45);
+  background-color: rgb(220 252 231);
+  border-color: rgb(74 222 128);
+}

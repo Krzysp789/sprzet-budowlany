@@ -1,0 +1,17 @@
+<div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3">
+  <div *ngFor="let address of addresses">
+    <a (click)="selectActive(address)"
+      class="block cursor-pointer mb-2 w-72 h-28 p-6 bg-white border rounded-lg shadow hover:bg-gray-100"
+      [ngClass]="address.active ? 'border-green-400' : 'border-gray-200'">
+      {{ address.street_number }} <br>
+      {{ address.post_code }} {{ address.town }} <br>
+    </a>
+    <span class="p-buttonset">
+      <button pButton (click)="showDialog(address)" class="p-button-info" icon="pi pi-pencil"></button>
+      <button pButton (click)="deleteAddress(address)" [disabled]="address.active ? true : false"
+        class="p-button-danger" icon="pi pi-trash"></button>
+    </span>
+  </div>
+  <button pButton (click)="showDialog()" class="p-button-success" style="width: 16rem; height: 7rem;"
+    icon="pi pi-plus"></button>
+</div>

@@ -1,0 +1,63 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-size: 14px;
+}
+
+.p-input-icon-left input {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.p-menuitem-link-active span {
+  color: rgb(156 163 175) !important;
+}
+
+.p-dataview-grid>.p-dataview-content>.p-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .p-dataview-grid>.p-dataview-content>.p-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .p-dataview-grid>.p-dataview-content>.p-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .p-dataview-grid>.p-dataview-content>.p-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.p-dataview.p-dataview-list .p-dataview-content>.p-grid>div {
+  border: 0px !important;
+}
+
+.p-steps .p-steps-item.not-active:nth-child(2) a.p-menuitem-link {
+  cursor: pointer !important;
+}
+
+.p-steps .p-steps-item.not-active:nth-child(2) .p-menuitem-link {
+  .p-steps-number {
+    background: white;
+    font-weight: normal !important;
+    color: #3f3f46 !important;
+  }
+
+  .p-steps-title {
+    font-weight: normal !important;
+    color: #3f3f46 !important;
+  }
+
+}

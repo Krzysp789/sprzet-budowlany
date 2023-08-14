@@ -1,0 +1,68 @@
+<div class="flex justify-between">
+  <div class="w-full lg:w-3/4 p-4">
+    <form [formGroup]="orderForm">
+      <div class="mb-8">
+        <p class="text-xl font-semibold">Wybierz sposób dostawy</p>
+        <div class="flex items-center justify-between h-14">
+          <div>
+            <p-radioButton inputId="personalPickup" formControlName="delivery" value="1"></p-radioButton>
+            <label for="personalPickup" class="ml-2 align-bottom">Odbiór osobisty</label>
+          </div>
+
+          <div>0 zł</div>
+        </div>
+
+        <div class="flex items-center justify-between h-14">
+          <div>
+            <p-radioButton inputId="deliveryToAddress" formControlName="delivery" value="2"></p-radioButton>
+            <label for="deliveryToAddress" class="ml-2">Dostawa na adres</label>
+          </div>
+
+          <div>50 zł</div>
+        </div>
+        <div *ngIf="orderForm.controls['delivery'].value == 2">
+          <div class="mx-2">
+            {{ address?.street_number }} <br>
+            {{ address?.post_code }} {{ address?.town }} <br>
+            <a class="text-blue-500 font-semibold uppercase cursor-pointer" (click)="showAddresses()">
+              Zmień adres
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-xl font-semibold">Wybierz sposób płatności</p>
+        <div class="flex items-center justify-between h-14">
+          <div>
+            <p-radioButton inputId="uponReceipt" formControlName="payment" value="1"></p-radioButton>
+            <label for="uponReceipt" class="ml-2">Przy odbiorze</label>
+          </div>
+
+          <div>0 zł</div>
+        </div>
+
+        <div class="flex items-center justify-between h-14">
+          <div>
+            <p-radioButton inputId="transfer" formControlName="payment" value="2"></p-radioButton>
+            <label for="transfer" class="ml-2">Przelew</label>
+          </div>
+
+          <div>5 zł</div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="w-full lg:w-1/4 flex">
+    <div class="mx-auto mb-auto border border-gray-200 rounded-lg p-10">
+      <p class="mb-2">Wartość koszyka: {{ calculateCart() | currency }}</p>
+      <p class="mb-2">Dostawa: {{ calculateDelivery() | currency }}</p>
+      <p class="mb-2">Płatność: {{ calculatePayment() | currency }}</p>
+      <hr class="h-px my-2 bg-gray-200 border-0">
+      <p class="mb-2">Łączny koszt: {{ calculateAll() | currency }}</p>
+      <p-button label="Przejdź do podsumowania" [routerLink]="['podsumowanie']" [disabled]="orderForm.invalid"></p-button>
+    </div>
+  </div>
+
+</div>

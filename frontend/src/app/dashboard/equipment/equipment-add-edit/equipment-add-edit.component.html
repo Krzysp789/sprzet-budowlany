@@ -1,0 +1,54 @@
+<form (ngSubmit)="onSubmit(form)" #form="ngForm" class="space-y-6">
+  <div class="flex flex-col">
+    <label for="category_id" class="mb-2">Kategoria</label>
+
+    <p-dropdown [options]="categories" inputId="category_id" [(ngModel)]="equipment.category_id" name="category_id"
+      #category_id="ngModel" optionLabel="name" optionValue="id" placeholder="Wybierz kategorie" [filter]="true"
+      filterBy="name" [showClear]="true" styleClass="w-full" [required]="true" existCategory>
+      <ng-template let-category pTemplate="item">
+        <div class="flex align-items-center gap-2">
+          <div>{{ category.name }}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+
+    <app-control-error [control]="category_id.control" [submitted]="form.submitted" name="kategoria">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="name" class="mb-2">Nazwa</label>
+
+    <input type="text" pInputText id="name" [(ngModel)]="equipment.name" name="name" #name="ngModel" required
+      [uniqueEquipment]="equipmentName" />
+
+    <app-control-error [control]="name.control" [submitted]="form.submitted" name="nazwa">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="price" class="mb-2">Cena</label>
+
+    <p-inputNumber inputId="price" [(ngModel)]="equipment.price" name="price" #price="ngModel" mode="currency"
+      currency="PLN" locale="pl-PL" styleClass="w-full" [required]="true">
+    </p-inputNumber>
+
+    <app-control-error [control]="price.control" [submitted]="form.submitted" name="cena">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="description" class="mb-2">Opis</label>
+
+    <textarea rows="5" pInputTextarea id="description" [(ngModel)]="equipment.description" name="description"
+      #description="ngModel" maxlength="255"></textarea>
+
+    <app-control-error [control]="description.control" [submitted]="form.submitted" name="opis">
+    </app-control-error>
+  </div>
+
+  <div class="flex justify-end">
+    <p-button type="submit" label="Dodaj" *ngIf="!edit"></p-button>
+    <p-button type="submit" label="Aktualizuj" *ngIf="edit"></p-button>
+  </div>
+</form>

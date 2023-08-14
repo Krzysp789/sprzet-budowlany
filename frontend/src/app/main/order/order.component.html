@@ -1,0 +1,10 @@
+<div class="container mx-auto mt-5 flex justify-between">
+  <p-card class="w-full">
+    <div class="mb-12 mt-4 max-w-5xl mx-auto">
+      <p-steps [model]="items" [readonly]="false"></p-steps>
+    </div>
+    <router-outlet></router-outlet>
+  </p-card>
+</div>
+
+<p-confirmDialog></p-confirmDialog>

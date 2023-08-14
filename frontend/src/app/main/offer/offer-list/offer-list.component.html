@@ -1,0 +1,65 @@
+<div class="container mx-auto mt-5">
+  <div class="p-6 bg-white border border-gray-200 rounded-lg shadow mb-1">
+    <p-dataView #dv [value]="equipment" [layout]="layout" [rows]="20" [paginator]="true"
+      emptyMessage="Nie znaleziono sprzętów">
+      <ng-template pTemplate="header">
+        <div class="flex">
+          <div class="flex justify-content-end mr-3">
+            <span class="my-auto mr-1">Widok</span>
+            <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+          </div>
+          <div class="flex flex-column md:flex-row md:justify-content-between mr-3">
+            <span class="my-auto mr-1">Sortowanie</span>
+            <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" (onChange)="getEquipment()"
+              styleClass="mb-2 md:mb-0"></p-dropdown>
+          </div>
+          <div class="flex flex-column md:flex-row md:justify-content-between">
+            <span class="my-auto mr-1">Kategoria</span>
+            <p-dropdown [options]="categoryOptions" [(ngModel)]="category" (onChange)="getEquipment()"
+              styleClass="mb-2 md:mb-0"></p-dropdown>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template let-equip pTemplate="listItem">
+        <div class="cell">
+          <a [routerLink]="[equip.id]" class="flex gap-6 p-8 w-full hover:bg-zinc-50">
+            <div class="w-[16rem]">
+              <img src="/assets/images/koparka.svg" class="m-2 w-[14rem]" alt="" />
+            </div>
+
+            <div class="shrink w-full">
+              <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ equip.name }}</h5>
+            </div>
+
+            <div class="w-[26rem]">
+              <ul class="mb-3">
+                <li>kategoria: <span class="text-gray-900">{{ equip.category_name }}</span></li>
+                <li>cena: <span class="text-gray-900">{{ equip.price | currency }}</span></li>
+                <li>dostępna ilość: <span class="text-gray-900">{{ equip.available_items_count }} szt</span></li>
+              </ul>
+            </div>
+          </a>
+          <hr class="separator h-px bg-gray-200 border-0">
+        </div>
+      </ng-template>
+
+      <ng-template let-equip pTemplate="gridItem" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        <div class="cell">
+          <a [routerLink]="[equip.id]" class="flex flex-col w-full p-4 mb-4 hover:bg-zinc-50">
+            <img src="/assets/images/koparka.svg" class="m-2 w-full" alt="" />
+
+            <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ equip.name }}</h5>
+
+            <ul class="mb-3">
+              <li>kategoria: <span class="text-gray-900">{{ equip.category_name }}</span></li>
+              <li>cena: <span class="text-gray-900">{{ equip.price | currency }}</span></li>
+              <li>dostępna ilość: <span class="text-gray-900">{{ equip.available_items_count }} szt</span></li>
+            </ul>
+          </a>
+          <hr class="separator h-px bg-gray-200 border-0">
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
+</div>

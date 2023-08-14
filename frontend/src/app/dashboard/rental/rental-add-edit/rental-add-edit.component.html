@@ -1,0 +1,132 @@
+<form (ngSubmit)="onSubmit(form)" #form="ngForm" class="space-y-6" [afterEqualDate]="['date_rental', 'date_deadline']">
+  <div class="flex flex-col">
+    <label for="customer_id" class="mb-2">Klient</label>
+
+    <p-dropdown [options]="customers" inputId="customer_id" [(ngModel)]="rental.customer_id" name="customer_id"
+      #customer_id="ngModel" optionLabel="labelOption" optionValue="id" placeholder="Wybierz klienta" [filter]="true"
+      filterBy="first_name,last_name" [showClear]="true" styleClass="w-full" [required]="true" existCustomer
+      (ngModelChange)="getCustomersAddress(rental.customer_id)">
+      <ng-template let-customer pTemplate="item">
+        <div class="flex align-items-center gap-2">
+          <div>{{ customer.first_name }} {{ customer.last_name }}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+
+    <app-control-error [control]="customer_id.control" [submitted]="form.submitted" name="klient">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="date_rental" class="mb-2">Data wypożyczenia</label>
+
+    <div *ngIf="!edit">
+      <input type="date" pInputText id="date_rental" [(ngModel)]="rental.date_rental" name="date_rental"
+        #date_rental="ngModel" class="w-full" required afterEqualToday />
+
+      <app-control-error [control]="date_rental.control" [submitted]="form.submitted" name="data wypożyczenia">
+      </app-control-error>
+    </div>
+
+    <div *ngIf="edit">
+      <input type="date" pInputText id="date_rental" [(ngModel)]="rental.date_rental" name="date_rental"
+        #date_rental="ngModel" class="w-full" required />
+
+      <app-control-error [control]="date_rental.control" [submitted]="form.submitted" name="data wypożyczenia">
+      </app-control-error>
+    </div>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="date_deadline" class="mb-2">Termin oddania</label>
+
+    <input type="date" pInputText id="date_deadline" [(ngModel)]="rental.date_deadline" name="date_deadline"
+      #date_deadline="ngModel" required />
+
+    <app-control-error [control]="date_deadline.control" [submitted]="form.submitted" name="termin oddania">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="date_return" class="mb-2">Data oddania</label>
+
+    <input type="date" pInputText id="date_return" [(ngModel)]="rental.date_return" name="date_return"
+      #date_return="ngModel" />
+
+    <app-control-error [control]="date_return.control" [submitted]="form.submitted" name="data oddania">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="status" class="mb-2">Status</label>
+
+    <p-dropdown [options]="rentalStatusTable" inputId="status" [(ngModel)]="rental.status" name="status"
+      #status="ngModel" optionLabel="displayName" optionValue="id" placeholder="Wybierz status" [showClear]="true"
+      styleClass="w-full" [required]="true" rentStatusExist>
+    </p-dropdown>
+
+    <app-control-error [control]="status.control" [submitted]="form.submitted" name="status">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="delivery" class="mb-2">Dostawa</label>
+
+    <p-dropdown [options]="deliveryTable" inputId="delivery" [(ngModel)]="rental.delivery" name="delivery"
+      #delivery="ngModel" optionLabel="displayName" optionValue="id" placeholder="Wybierz dostawe" [showClear]="true"
+      styleClass="w-full" [required]="true" existDelivery>
+    </p-dropdown>
+
+    <app-control-error [control]="delivery.control" [submitted]="form.submitted" name="dostawa">
+    </app-control-error>
+  </div>
+
+  <div *ngIf="rental.delivery == DeliveryEnum.dostawa_na_adres" class="flex flex-col">
+    <label for="address_id" class="mb-2">Adres dostawy</label>
+
+    <p-dropdown [options]="addresses" inputId="address_id" [(ngModel)]="rental.address_id" name="address_id"
+      #address_id="ngModel" optionLabel="labelOption" optionValue="id" placeholder="Wybierz adres" [showClear]="true"
+      styleClass="w-full" [required]="true" [existAddress]="rental.customer_id">
+      <ng-template let-address pTemplate="item">
+        <div class="flex align-items-center gap-2">
+          <div>{{ address.labelOption }}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+
+    <app-control-error [control]="address_id.control" [submitted]="form.submitted" name="adres dostawy">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="payment" class="mb-2">Płatność</label>
+
+    <p-dropdown [options]="paymentTable" inputId="payment" [(ngModel)]="rental.payment" name="payment"
+      #payment="ngModel" optionLabel="displayName" optionValue="id" placeholder="Wybierz płatność" [showClear]="true"
+      styleClass="w-full" [required]="true" existPayment>
+    </p-dropdown>
+
+    <app-control-error [control]="payment.control" [submitted]="form.submitted" name="płatność">
+    </app-control-error>
+  </div>
+
+  <div class="flex flex-row items-center">
+    <label for="paid" class="mr-2">Opłacono</label>
+    <p-toggleButton [(ngModel)]="rental.paid" name="paid" #paid="ngModel" onLabel="Tak" offLabel="Nie"></p-toggleButton>
+  </div>
+
+  <div class="flex flex-col">
+    <label for="notes" class="mb-2">Uwagi</label>
+
+    <textarea pInputTextarea id="notes" [(ngModel)]="rental.notes" name="notes" #notes="ngModel"
+      maxlength="255"></textarea>
+
+    <app-control-error [control]="notes.control" [submitted]="form.submitted" name="uwagi">
+    </app-control-error>
+  </div>
+
+  <div class="flex justify-end">
+    <p-button type="submit" label="Dodaj" *ngIf="!edit"></p-button>
+    <p-button type="submit" label="Aktualizuj" *ngIf="edit"></p-button>
+  </div>
+</form>

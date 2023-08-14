@@ -1,0 +1,16 @@
+<form (ngSubmit)="onSubmit(form)" #form="ngForm" class="space-y-6">
+  <div class="flex flex-col">
+    <label for="name" class="mb-2">Nazwa</label>
+
+    <input type="text" pInputText id="name" [(ngModel)]="category.name" name="name" #name="ngModel" required
+      [uniqueCategory]="categoryName" />
+
+    <app-control-error [control]="name.control" [submitted]="form.submitted" name="nazwa">
+    </app-control-error>
+  </div>
+
+  <div class="flex justify-end">
+    <p-button type="submit" label="Dodaj" *ngIf="!edit"></p-button>
+    <p-button type="submit" label="Aktualizuj" *ngIf="edit"></p-button>
+  </div>
+</form>

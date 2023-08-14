@@ -1,0 +1,41 @@
+<div class="container mx-auto mt-5">
+  <p-card>
+    <div class="flex gap-12">
+      <div class="shrink">
+        <img src="/assets/images/koparka.svg" class="mx-auto" alt="" />
+      </div>
+      <div class="w-[40rem]">
+        <ul class="mb-2 space-y-1 list-none list-inside">
+          <li>
+            <span class="font-semibold text-gray-600">Nazwa:</span> {{ equipment.name }}
+          </li>
+          <li>
+            <span class="font-semibold text-gray-600">Cena:</span> {{ equipment.price | currency }}
+          </li>
+          <li>
+            <span class="font-semibold text-gray-600">Dostępna ilość:</span> {{ equipment.available_items_count }} szt
+          </li>
+          <li>
+            <span class="font-semibold text-gray-600">Kategoria:</span> {{ equipment.category_name }}
+          </li>
+          <li>
+            <span class="font-semibold text-gray-600">Opis:</span> {{ equipment.description }}
+          </li>
+        </ul>
+
+        <div class="container mx-auto mt-5">
+          <p-button label="Powrót" [routerLink]="['..']" class="mr-2"></p-button>
+
+          <p-button *ngIf="($any(equipment?.available_items_count) > 0) && !EquipmentInCart()" label="Dodaj do koszyka"
+            (click)="addToCart()"></p-button>
+
+          <p-button *ngIf="$any(equipment?.available_items_count) <= 0" label="Sprzęt niedostępny"
+            [disabled]="true"></p-button>
+
+          <p-button *ngIf="EquipmentInCart()" label="Sprzęt w koszyku" [disabled]="true"></p-button>
+        </div>
+      </div>
+    </div>
+
+  </p-card>
+</div>

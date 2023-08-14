@@ -1,0 +1,14 @@
+<p-menubar [model]="items">
+  <ng-template pTemplate="start">
+    <a [routerLink]="['']" class="flex items-center">
+      <img src="/assets/images/koparka.svg" class="h-6 mr-3 sm:h-9" alt="" />
+      <span class="self-center text-xl font-semibold whitespace-nowrap">Sprzęt budowlany</span>
+    </a>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <p-button styleClass="p-button-secondary p-button-text" (click)="menu.toggle($event)"
+      [icon]="expanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'" [label]="userData.name">
+    </p-button>
+    <p-menu #menu [model]="userItems" styleClass="mt-5" [popup]="true"></p-menu>
+  </ng-template>
+</p-menubar>
