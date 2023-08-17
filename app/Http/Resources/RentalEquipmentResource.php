@@ -22,6 +22,7 @@ class RentalEquipmentResource extends JsonResource
                 $array['name'] = $equip['name'];
                 $array['price'] = $equip['price'];
                 $array['quantity'] = $equip['quantity'];
+                $array['image_url'] = $equip['image_url'];
                 array_push($equipment, $array);
             }
         return [

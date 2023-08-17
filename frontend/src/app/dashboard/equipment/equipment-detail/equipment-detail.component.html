@@ -10,23 +10,57 @@
     </ng-template>
 
     <ng-template pTemplate="content">
-      <ul class="mb-5 space-y-1 text-[#71717A] list-none list-inside">
-        <li>
-          <span class="font-semibold text-gray-600">ID:</span> {{ equipment?.id }}
-        </li>
-        <li>
-          <span class="font-semibold text-gray-600">Nazwa:</span> {{ equipment?.name }}
-        </li>
-        <li>
-          <span class="font-semibold text-gray-600">Kategoria:</span> {{ equipment?.category_name }}
-        </li>
-        <li>
-          <span class="font-semibold text-gray-600">Cena:</span> {{ equipment?.price }} zł
-        </li>
-        <li>
-          <span class="font-semibold text-gray-600">Opis:</span> {{ equipment?.description }}
-        </li>
-      </ul>
+      <div class="flex gap-5 mb-5">
+        <img *ngIf="equipment?.image_url" [src]="equipment?.image_url" alt="sprzęt" class="w-[300px] h-[300px] mr-5">
+        <img *ngIf="!equipment?.image_url" src="/assets/images/empty.svg" alt="sprzęt" class="w-[300px] h-[300px] mr-5">
+        <div>
+          <ul class="mb-5 space-y-1 text-[#71717A] list-none list-inside">
+            <li>
+              <span class="font-semibold text-gray-600">ID:</span> {{ equipment?.id }}
+            </li>
+            <li>
+              <span class="font-semibold text-gray-600">Nazwa:</span> {{ equipment?.name }}
+            </li>
+            <li>
+              <span class="font-semibold text-gray-600">Kategoria:</span> {{ equipment?.category_name }}
+            </li>
+            <li>
+              <span class="font-semibold text-gray-600">Cena:</span> {{ equipment?.price }} zł
+            </li>
+            <li>
+              <span class="font-semibold text-gray-600">Opis:</span> {{ equipment?.description }}
+            </li>
+          </ul>
+
+          <p-button *ngIf="!fileDrop" (onClick)="fileDrop = true" label="Zmiana obrazku"></p-button>
+
+          <div>
+            <div *ngIf="fileDrop" class="flex items-center justify-center w-full mb-2" (dragover)="onDragOver($event)"
+              (drop)="onDropSuccess($event)">
+              <label for="image"
+                class="flex flex-col items-center justify-center w-full h-64 border border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                  <i class="pi pi-cloud-upload" style="font-size: 2.5rem"></i>
+                  <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Kliknij aby wrzucić plik</span> albo
+                    przeciągnij i upuść</p>
+                  <p class="text-xs text-gray-500">maxsymalny rozmiar 512kB</p>
+                </div>
+                <input type="file" id="image" (change)="onChange($event)" class="hidden">
+              </label>
+            </div>
+            <div class="flex justify-between">
+              <span role="alert" class="mt-1 text-sm text-red-600">{{ imageError }}</span>
+
+              <p-button *ngIf="fileDrop" (onClick)="fileDrop = false" label="Anuluj"
+                styleClass="p-button-danger"></p-button>
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
 
       <div class="mb-2">
         <span class="font-bold text-xl text-gray-600">Przedmioty</span>

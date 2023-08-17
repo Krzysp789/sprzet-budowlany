@@ -50,6 +50,8 @@ Route::middleware(['auth:sanctum', 'role:customer'])->group(function () {
 Route::middleware(['auth:sanctum', 'role:admin|employee'])->group(function () {
     Route::get('categories/search', [CategoryController::class, 'search']);
     Route::get('equipment/search', [EquipmentController::class, 'search']);
+    Route::post('equipment/{equipment}/updateImg', [EquipmentController::class, 'updateImg'])
+        ->where('equipment', '[0-9]+');
     Route::get('equipment/{equipment}/items/search', [EquipmentItemController::class, 'search'])
         ->where('equipment', '[0-9]+');
     Route::get('customers/search', [CustomerController::class, 'search']);

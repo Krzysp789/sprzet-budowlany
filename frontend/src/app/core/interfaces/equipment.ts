@@ -11,4 +11,5 @@ export interface Equipment {
   available_items_count?: number;
   quantity?: number;
   items?: Item[];
+  image_url?: string;
 }

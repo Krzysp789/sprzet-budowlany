@@ -11,10 +11,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreRentRequest;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\EquipmentResource;
+use Illuminate\Database\Eloquent\Builder;
 use App\Http\Resources\EquipmentCollection;
 use App\Http\Resources\RentalEquipmentResource;
-use Illuminate\Database\Eloquent\Builder;
 
 class SelfRentController extends Controller
 {
@@ -40,6 +41,14 @@ class SelfRentController extends Controller
             }
             $offer = $offer->sortBy([[$sort, $order]])->values();
         }
+
+        $offer->each(function ($equip) {
+            if (!empty(Storage::disk('eqImg')->files($equip->id))) {
+                $equip->image_url = Storage::disk('eqImg')
+                    ->url(Storage::disk('eqImg')->files($equip->id)[0]);
+            }
+        });
+
         return response()->json(new EquipmentCollection($offer, $offer->count()));
     }
     public function offerShow(Equipment $equipment): JsonResponse
@@ -49,6 +58,10 @@ class SelfRentController extends Controller
                 $query->where('status', 'dostępny');
             },
         ])->findOrFail($equipment->id);
+        if (!empty(Storage::disk('eqImg')->files($equipment->id))) {
+            $offer->image_url = Storage::disk('eqImg')
+                ->url(Storage::disk('eqImg')->files($equipment->id)[0]);
+        }
         return response()->json(new EquipmentResource($offer));
     }
 
@@ -70,10 +83,21 @@ class SelfRentController extends Controller
             $rental->equipment = $rental->items->groupBy('equipment_id')->map(function ($item, $key) {
                 return collect(Equipment::find($key))->merge([
                     'quantity' => $item->count(),
-                    'items' => $item
+                    'items' => $item,
+                    'image_url' => null
                 ]);
             })->values();
         }
+
+        $rentals->each(function ($rental) {
+            $rental->equipment->each(function ($equip) {
+                if (!empty(Storage::disk('eqImg')->files($equip['id']))) {
+                    $equip['image_url'] = Storage::disk('eqImg')
+                        ->url(Storage::disk('eqImg')->files($equip['id'])[0]);
+                }
+            });
+        });
+
         return response()->json(RentalEquipmentResource::collection($rentals->load('address')));
     }
 

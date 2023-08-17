@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg2"
+   width="1414.6667"
+   height="634.44226"
+   viewBox="0 0 1414.6667 634.44226"
+   sodipodi:docname="koparka.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath18">
+      <path
+         d="M 0,1200 H 1200 V 0 H 0 Z"
+         id="path16" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath230">
+      <path
+         d="m 375,769 h 96.999 v 87 H 375 Z"
+         id="path228" />
+    </clipPath>
+    <mask
+       maskUnits="userSpaceOnUse"
+       x="0"
+       y="0"
+       width="1"
+       height="1"
+       id="mask236">
+      <image
+         width="1"
+         height="1"
+         style="image-rendering:optimizeSpeed"
+         preserveAspectRatio="none"
+         xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABXCAAAAAAxTnTPAAAAAXNCSVQI5gpbmQAAA3pJREFUaIHtl82S4zYMhNEASVn25P3fdC2RBDoHyp7dJCN5PblslVollQ8sfgZA4kfk1KlTp06dOnXqTxbeXMj/l4B/rOXvUF4gYLx4/Obn+wrjkAARbM9zMZ/PC4wjAkQACICNMgCkkHyJcUCAQAAFxkew7U+SQZLHiHQEAKBQVYVCISJCkhERYDBEiH3ELmEDqKmZmqoCItv+7uEIYRwADmwQAdTMUrJkZgpAyAh37961QwKUfcYeAQJALVlOOeeUzBQQRrj33pp2dBGJAz/tewmqZinnUkopOZkBwnBvvdZqFSIkDmK9Q8BApFTKZbpMU8nJVIThvda6JAOEpMS+n3a9NJxUymWe5/ky5ZwUQu+trktOKsIgCewaceillPI0X2/X63yZcjJIeG/rcs8KYUSEcj/YXxMgEKhZLtPlevu4XedLSaakt7rcs0EYHh4ReDfSEEAt5TLN19vHx8c8l2wq4W1dSlIJ7927u34nDqpqKU+X+Xr76+M6Tw9CSSrRe2s1dcX+hfiSANmuW8pluszX6/U2X3JSCa/ZlN5rXWtupqrEzpXY89I4S5ZyLtN0medBYE8G9lYvS8nZRip5M9IPN1nKDyVFqEr0OpWSczIzVeyG+iBrCFTVdBNUFSJhlobMVBX7JeAg8+H5HQkVBIPczFNVBTDq61dm7J9WEREhw3tvrZrQDQxv3YODs9W+t+IwKjEZ4b23tSSwdzNIeKtrbT0GRQ4K5b6XSMZIQ0npvaSkAL3XdVlr7f4JeY9AkuHe6no30NuaU1IVsre6/LivtfVwUvYhBzaEe2trUkSvS8nJVEF6b+v9x31ZW3cnZZfxNYF4+Egh7G3NJZmpQhje6nq/39faPCLetoFgRHRVCHtdS07JtgsRvdVlWZa1dt8Av581iBFnABLe6zIKtQIgI3pt67qs7Xlw37JBBkEY3nLaMoRCRCK8t1brOE/BvSK3G2mGoJPhPVUbGUIBAUl3b721/h0bCIrQKYzoZs8UMbqyCPfu3R9x+Jqxdx0BgW495fj7eGQhMiI83CPGrXuT8Oxbn7s/GvDRGUdE8ACwn1Iw7MDW3wsEeEwpP7Xfu4CXuvufR5RnpuaDcjRDvDChbNMPHqtHIDZDjmeU4znu5zHx19X8nOm+Rfj3ql964cNB7uV5+r8Wvz5Unzp16tSpU6dO/bH6G1sEY1pdXDeMAAAAAElFTkSuQmCC"
+         id="image238" />
+    </mask>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath248">
+      <path
+         d="M 0,1200 H 1200 V 0 H 0 Z"
+         id="path246" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath276">
+      <path
+         d="M 0,1200 H 1200 V 0 H 0 Z"
+         id="path274" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath284">
+      <path
+         d="M 671,657 H 998 V 581 H 671 Z"
+         id="path282" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath300">
+      <path
+         d="m 883,728 h 240 V 600 H 883 Z"
+         id="path298" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath316">
+      <path
+         d="M 395,636 H 504 V 592 H 395 Z"
+         id="path314" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath332">
+      <path
+         d="m 602,678 h 66 v -20 h -66 z"
+         id="path330" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath348">
+      <path
+         d="m 623,657 h 72 v -46 h -72 z"
+         id="path346" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath364">
+      <path
+         d="M 478,529 H 668 V 460 H 478 Z"
+         id="path362" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath380">
+      <path
+         d="M 69,547 H 209 V 465 H 69 Z"
+         id="path378" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath396">
+      <path
+         d="m 108,660 h 43.165 V 547 H 108 Z"
+         id="path394" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath412">
+      <path
+         d="m 272,771 h 20 v -85 h -20 z"
+         id="path410" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath428">
+      <path
+         d="m 335,750 h 22 v -57 h -22 z"
+         id="path426" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath444">
+      <path
+         d="m 421,788 h 62 v -75 h -62 z"
+         id="path442" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath460">
+      <path
+         d="m 496,742.387 h 40 V 694 h -40 z"
+         id="path458" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath476">
+      <path
+         d="m 495,778.242 h 25 V 748 h -25 z"
+         id="path474" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath492">
+      <path
+         d="m 464,751.984 h 19 V 729 h -19 z"
+         id="path490" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath508">
+      <path
+         d="M 0,1200 H 1200 V 0 H 0 Z"
+         id="path506" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="false"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.518125"
+     inkscape:cx="676.47768"
+     inkscape:cy="185.28347"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g10"
+     showborder="false"
+     shape-rendering="auto"
+     borderlayer="false">
+    <inkscape:page
+       x="0"
+       y="0"
+       id="page8"
+       width="1414.6667"
+       height="634.44226" />
+  </sodipodi:namedview>
+</svg>

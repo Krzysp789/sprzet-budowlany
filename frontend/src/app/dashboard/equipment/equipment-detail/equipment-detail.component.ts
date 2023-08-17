@@ -40,6 +40,8 @@ export class EquipmentDetailComponent implements OnInit, OnDestroy {
   ref: DynamicDialogRef;
   @ViewChild('globalFilter') globalFilter: ElementRef;
   @ViewChild('dt1') dt1: Table;
+  imageError: string | null = null;
+  fileDrop: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -67,6 +69,10 @@ export class EquipmentDetailComponent implements OnInit, OnDestroy {
 
   getEquipment(): void {
     this.route.data.subscribe(data => this.equipment = data['equipment']);
+  }
+
+  getFreshEquipment(): void {
+    this.dataService.equipmentShow(this.id).subscribe(res => this.equipment = res);
   }
 
   getEquipmentItems(): void {
@@ -119,5 +125,61 @@ export class EquipmentDetailComponent implements OnInit, OnDestroy {
     });
 
     this.ref.onClose.subscribe(() => this.getEquipmentItems());
+  }
+
+  onDragOver(event: Event) {
+    event.preventDefault();
+  }
+
+  onDropSuccess(event: any) {
+    event.preventDefault();
+    this.updateImage(event.dataTransfer.files);
+  }
+
+  onChange(event: any) {
+    this.updateImage(event.target.files);
+  }
+
+  updateImage(files: FileList) {
+    if (files.length != 1) {
+      this.imageError = 'Plik jest wymagany';
+      return;
+    }
+
+    let image: File = files[0];
+    if (!image.type.startsWith("image")) {
+      this.imageError = 'Plik musi być grafiką';
+      return;
+    }
+
+    if ((image.size / 1024) > 512) {
+      this.imageError = 'Plik nie może być większy niż 512kB';
+      return;
+    }
+
+    this.imageError = null;
+    let data: FormData = new FormData();
+    data.append('image', image, image.name);
+
+    this.dataService.equipmentUpdateImg(data, this.id).subscribe({
+      next: (res: OperationResponse) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Zaktualizowano',
+          detail: res.message
+        });
+        this.fileDrop = false;
+        this.getFreshEquipment();
+      },
+      error: (res: HttpErrorResponse) => {
+        if (res.status == 422) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Wystąpił problem',
+            detail: res.error.message
+          });
+        }
+      }
+    });
   }
 }

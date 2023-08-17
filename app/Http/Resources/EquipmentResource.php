@@ -23,7 +23,8 @@ class EquipmentResource extends JsonResource
             'description' => $this->description,
             'items_count' => $this->whenCounted('items'),
             'available_items_count' => $this->whenCounted('available_items_count'),
-            'items' => ItemResource::collection($this->whenLoaded('items'))
+            'items' => ItemResource::collection($this->whenLoaded('items')),
+            'image_url' => $this->image_url
         ];
     }
 }

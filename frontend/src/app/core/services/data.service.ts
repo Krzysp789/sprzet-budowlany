@@ -179,6 +179,12 @@ export class DataService {
     );
   }
 
+  equipmentUpdateImg(data: any, id: number): Observable<OperationResponse> {
+    return this.http.post<OperationResponse>(
+      `${env.apiUrl}/equipment/${id}/updateImg`, data, { withCredentials: true }
+    );
+  }
+
   //Equipment-item
   equipmentItemsIndex(idEq: number): Observable<Collection<Item>> {
     return this.http.get<Collection<Item>>(

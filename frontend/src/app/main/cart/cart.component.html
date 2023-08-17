@@ -13,7 +13,8 @@
         <div *ngFor="let equip of rentDetail.equipment">
           <div class="flex flex-row">
             <div class="w-32">
-              <img src="/assets/images/koparka.svg" class="h-12 mr-3">
+              <img *ngIf="equip.image_url" [src]="equip.image_url" alt="sprzęt" class="w-32 h-12">
+              <img *ngIf="!equip.image_url" src="/assets/images/empty.svg" alt="sprzęt" class="w-32 h-12">
             </div>
             <div class="grow">
               {{equip.name}}

@@ -1,9 +1,12 @@
 <div class="container mx-auto mt-5">
   <p-card>
-    <div class="flex gap-12">
-      <div class="shrink">
-        <img src="/assets/images/koparka.svg" class="mx-auto" alt="" />
+    <div>
+      <div>
+        <img *ngIf="equipment.image_url" [src]="equipment.image_url" alt="logo" class="mx-auto w-[300px] h-[300px]" />
+        <img *ngIf="!equipment.image_url" src="/assets/images/empty.svg" alt="logo"
+          class="mx-auto w-[300px] h-[300px]" />
       </div>
+
       <div class="w-[40rem]">
         <ul class="mb-2 space-y-1 list-none list-inside">
           <li>
@@ -23,7 +26,7 @@
           </li>
         </ul>
 
-        <div class="container mx-auto mt-5">
+        <div class="mx-auto mt-5">
           <p-button label="Powrót" [routerLink]="['..']" class="mr-2"></p-button>
 
           <p-button *ngIf="($any(equipment?.available_items_count) > 0) && !EquipmentInCart()" label="Dodaj do koszyka"
@@ -36,6 +39,5 @@
         </div>
       </div>
     </div>
-
   </p-card>
 </div>

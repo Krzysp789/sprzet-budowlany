@@ -8,8 +8,10 @@ use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EquipmentRequest;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\EquipmentResource;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\EquipmentCollection;
 
 class EquipmentController extends Controller
@@ -54,11 +56,22 @@ class EquipmentController extends Controller
             $equipment = $equipment->skip($request->first)->take($request->rows)->values();
         }
 
+        $equipment->each(function ($equip) {
+            if (!empty(Storage::disk('eqImg')->files($equip->id))) {
+                $equip->image_url = Storage::disk('eqImg')
+                    ->url(Storage::disk('eqImg')->files($equip->id)[0]);
+            }
+        });
+
         return response()->json(new EquipmentCollection($equipment, $total));
     }
 
     public function show(Equipment $equipment): JsonResponse
     {
+        if (!empty(Storage::disk('eqImg')->files($equipment->id))) {
+            $equipment->image_url = Storage::disk('eqImg')
+                ->url(Storage::disk('eqImg')->files($equipment->id)[0]);
+        }
         return response()->json(new EquipmentResource($equipment));
     }
 
@@ -100,6 +113,32 @@ class EquipmentController extends Controller
 
         return response()->json([
             'message' => "Udało się usunąć sprzęt $equipment->name."
+        ]);
+    }
+
+    public function updateImg(Request $request, Equipment $equipment): Response | JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|mimetypes:image/*|max:512',
+        ], [
+            'image.mimetypes' => 'Pole :attribute musi być grafiką'
+        ], ['image' => 'obrazek']);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'header' => "Nie udało się zaktualizować obrazka sprzętu $equipment->name",
+                'message' => implode(' ', $validator->errors()->all())
+            ], 422);
+        }
+
+        foreach (Storage::disk('eqImg')->files($equipment->id) as $img) {
+            Storage::delete("eqImg/$img");
+        };
+
+        Storage::putFile("eqImg/$equipment->id", $request->file('image'));
+
+        return response()->json([
+            'message' => "Udało się zakutualizować obrazek sprzętu $equipment->name."
         ]);
     }
 

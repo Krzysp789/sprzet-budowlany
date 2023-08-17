@@ -7,6 +7,7 @@ import { CardModule } from 'primeng/card';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { FileUploadModule } from 'primeng/fileupload';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -91,6 +92,7 @@ import { RentalsComponent } from './rental/rentals/rentals.component';
     InputTextModule,
     InputNumberModule,
     InputTextareaModule,
+    FileUploadModule,
     DropdownModule,
     RadioButtonModule,
     ToggleButtonModule,

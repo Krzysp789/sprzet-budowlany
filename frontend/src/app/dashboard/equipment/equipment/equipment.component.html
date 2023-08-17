@@ -23,6 +23,7 @@
           <th pSortableColumn="id">
             <div class="flex gap-1"># <p-sortIcon field="id"></p-sortIcon></div>
           </th>
+          <th>Zdjęcie</th>
           <th pSortableColumn="name">
             <div class="flex gap-1">Nazwa <p-sortIcon field="name"></p-sortIcon></div>
           </th>
@@ -44,6 +45,10 @@
       <ng-template pTemplate="body" let-equip>
         <tr>
           <td>{{equip.id}}</td>
+          <td>
+            <img *ngIf="equip.image_url" [src]="equip.image_url" alt="sprzęt" class="w-[50px] h-[40px]">
+            <img *ngIf="!equip.image_url" src="/assets/images/empty.svg" alt="sprzęt" class="w-[50px] h-[40px]">
+          </td>
           <td>{{equip.name}}</td>
           <td>{{equip.category_name}}</td>
           <td>{{equip.price | currency}}</td>

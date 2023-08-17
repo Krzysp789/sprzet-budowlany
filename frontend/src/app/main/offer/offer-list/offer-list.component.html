@@ -23,9 +23,10 @@
 
       <ng-template let-equip pTemplate="listItem">
         <div class="cell">
-          <a [routerLink]="[equip.id]" class="flex gap-6 p-8 w-full hover:bg-zinc-50">
-            <div class="w-[16rem]">
-              <img src="/assets/images/koparka.svg" class="m-2 w-[14rem]" alt="" />
+          <a [routerLink]="[equip.id]" class="flex gap-6 p-8 w-full hover:bg-zinc-100/100">
+            <div class="mr-3">
+              <img *ngIf="equip.image_url" [src]="equip.image_url" alt="sprzęt" class="w-[100px] h-[100px]" />
+              <img *ngIf="!equip.image_url" src="/assets/images/empty.svg" alt="sprzęt" class="w-[100px] h-[100px]" />
             </div>
 
             <div class="shrink w-full">
@@ -45,9 +46,12 @@
       </ng-template>
 
       <ng-template let-equip pTemplate="gridItem" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-        <div class="cell">
-          <a [routerLink]="[equip.id]" class="flex flex-col w-full p-4 mb-4 hover:bg-zinc-50">
-            <img src="/assets/images/koparka.svg" class="m-2 w-full" alt="" />
+        <div>
+          <a [routerLink]="[equip.id]" class="flex flex-col justify-center w-full p-4 mb-4 hover:bg-zinc-100/100">
+            <div class="mx-auto">
+              <img *ngIf="equip.image_url" [src]="equip.image_url" alt="sprzęt" class="w-[200px] h-[200px]" />
+              <img *ngIf="!equip.image_url" src="/assets/images/empty.svg" alt="sprzęt" class="w-[200px] h-[200px]" />
+            </div>
 
             <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ equip.name }}</h5>
 
