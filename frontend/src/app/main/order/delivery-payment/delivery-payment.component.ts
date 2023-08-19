@@ -1,4 +1,10 @@
 import {
+  animate,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import {
   Component,
   OnDestroy,
   OnInit,
@@ -26,7 +32,18 @@ import {
 @Component({
   selector: 'app-delivery-payment',
   templateUrl: './delivery-payment.component.html',
-  styleUrls: []
+  styleUrls: [],
+  animations: [
+    trigger('insertRemoveTrigger', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('100ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('100ms', style({ opacity: 0 }))
+      ])
+    ]),
+  ],
 })
 export class DeliveryPaymentComponent implements OnInit, OnDestroy {
   orderForm = this.formBuilder.group({

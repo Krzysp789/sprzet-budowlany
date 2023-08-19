@@ -13,7 +13,7 @@
             <i class="pi pi-search"></i>
             <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
               placeholder="Szukaj" #globalFilter />
-            <i *ngIf="globalFilter.value != ''" class="pi pi-times absolute right-3 cursor-pointer text-[#71717A]"
+            <i *ngIf="globalFilter.value" class="pi pi-times absolute right-3 cursor-pointer text-[#71717A]"
               (click)="clearGlobalFilter()"></i>
           </span>
         </div>

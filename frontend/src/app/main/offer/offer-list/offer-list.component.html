@@ -1,7 +1,7 @@
 <div class="container mx-auto mt-5">
   <div class="p-6 bg-white border border-gray-200 rounded-lg shadow mb-1">
     <p-dataView #dv [value]="equipment" [layout]="layout" [rows]="20" [paginator]="true"
-      emptyMessage="Nie znaleziono sprzętów">
+      emptyMessage="Nie znaleziono sprzętów" (onChangeLayout)="changeLayout($event)">
       <ng-template pTemplate="header">
         <div class="flex">
           <div class="flex justify-content-end mr-3">
@@ -23,10 +23,10 @@
 
       <ng-template let-equip pTemplate="listItem">
         <div class="cell">
-          <a [routerLink]="[equip.id]" class="flex gap-6 p-8 w-full hover:bg-zinc-100/100">
-            <div class="mr-3">
-              <img *ngIf="equip.image_url" [src]="equip.image_url" alt="sprzęt" class="w-[100px] h-[100px]" />
-              <img *ngIf="!equip.image_url" src="/assets/images/empty.svg" alt="sprzęt" class="w-[100px] h-[100px]" />
+          <a [routerLink]="[equip.id]" class="flex border-y mt-[-1px] gap-6 p-8 w-full hover:bg-zinc-100/100">
+            <div [ngSwitch]="!equip.image_url" class="mr-3">
+              <img *ngSwitchCase="false" [src]="equip.image_url" alt="sprzęt" class="w-[100px] h-[100px]" />
+              <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-[100px] h-[100px]" />
             </div>
 
             <div class="shrink w-full">
@@ -41,27 +41,25 @@
               </ul>
             </div>
           </a>
-          <hr class="separator h-px bg-gray-200 border-0">
         </div>
       </ng-template>
 
       <ng-template let-equip pTemplate="gridItem" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <a [routerLink]="[equip.id]" class="flex flex-col justify-center w-full p-4 mb-4 hover:bg-zinc-100/100">
-            <div class="mx-auto">
-              <img *ngIf="equip.image_url" [src]="equip.image_url" alt="sprzęt" class="w-[200px] h-[200px]" />
-              <img *ngIf="!equip.image_url" src="/assets/images/empty.svg" alt="sprzęt" class="w-[200px] h-[200px]" />
+          <a [routerLink]="[equip.id]" class="flex flex-col justify-center border-y w-full p-4 hover:bg-zinc-100/100">
+            <div [ngSwitch]="!equip.image_url" class="mx-auto">
+              <img *ngSwitchCase="false" [src]="equip.image_url" alt="sprzęt" class="w-[200px] h-[200px]" />
+              <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-[200px] h-[200px]" />
             </div>
 
             <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ equip.name }}</h5>
 
-            <ul class="mb-3">
+            <ul>
               <li>kategoria: <span class="text-gray-900">{{ equip.category_name }}</span></li>
               <li>cena: <span class="text-gray-900">{{ equip.price | currency }}</span></li>
               <li>dostępna ilość: <span class="text-gray-900">{{ equip.available_items_count }} szt</span></li>
             </ul>
           </a>
-          <hr class="separator h-px bg-gray-200 border-0">
         </div>
       </ng-template>
     </p-dataView>

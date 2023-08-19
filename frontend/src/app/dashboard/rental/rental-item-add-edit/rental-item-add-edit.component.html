@@ -1,61 +1,66 @@
 <form (ngSubmit)="onSubmit(form)" #form="ngForm" class="space-y-6">
-  <div *ngIf="!edit" class="flex flex-col">
-    <label for="equipment_id" class="mb-2">Sprzęt</label>
+  <div *ngIf="!edit">
+    <div class="flex flex-col">
+      <label for="equipment_id" class="mb-2">Sprzęt</label>
 
-    <p-dropdown [options]="equipment" inputId="equipment_id" [(ngModel)]="rentalItem.equipment_id" name="equipment_id"
-      #equipment_id="ngModel" optionLabel="labelOption" optionValue="id" placeholder="Wybierz sprzęt" [filter]="true"
-      filterBy="name" [showClear]="true" styleClass="w-full" [required]="true" (ngModelChange)="equipmentSet(rentalItem.equipment_id)">
-      <ng-template let-equip pTemplate="item">
-        <div class="flex align-items-center gap-2">
-          <div>{{ equip.name }}, dostępne: {{equip.available_items_count}}</div>
-        </div>
-      </ng-template>
-    </p-dropdown>
+      <p-dropdown [options]="equipment" inputId="equipment_id" [(ngModel)]="rentalItem.equipment_id" name="equipment_id"
+        #equipment_id="ngModel" optionLabel="labelOption" optionValue="id" placeholder="Wybierz sprzęt" [filter]="true"
+        filterBy="name" [showClear]="true" styleClass="w-full" [required]="true"
+        (ngModelChange)="equipmentSet(rentalItem.equipment_id)">
+        <ng-template let-equip pTemplate="item">
+          <div class="flex align-items-center gap-2">
+            <div>{{ equip.name }}, dostępne: {{equip.available_items_count}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
 
-    <app-control-error [control]="equipment_id.control" [submitted]="form.submitted" name="sprzęt">
-    </app-control-error>
-  </div>
-
-  <div *ngIf="!edit" class="flex flex-wrap gap-3">
-    <label class="mb-2">Typ dodawania</label>
-
-    <div class="flex align-items-center">
-      <p-radioButton inputId="single" [(ngModel)]="rentalItem.type" name="type" value="single"></p-radioButton>
-      <label for="single" class="ml-2">Pojedyńczy</label>
+      <app-control-error [control]="equipment_id.control" [submitted]="form.submitted" name="sprzęt">
+      </app-control-error>
     </div>
 
-    <div class="flex align-items-center">
-      <p-radioButton inputId="multiple" [(ngModel)]="rentalItem.type" name="type" value="multiple"></p-radioButton>
-      <label for="multiple" class="ml-2">Masowy</label>
+    <div class="flex flex-wrap gap-3 mt-4 mb-2">
+      <label class="mb-2">Typ dodawania</label>
+
+      <div class="flex align-items-center">
+        <p-radioButton inputId="single" [(ngModel)]="rentalItem.type" name="type" value="single"></p-radioButton>
+        <label for="single" class="ml-2">Pojedyńczy</label>
+      </div>
+
+      <div class="flex align-items-center">
+        <p-radioButton inputId="multiple" [(ngModel)]="rentalItem.type" name="type" value="multiple"></p-radioButton>
+        <label for="multiple" class="ml-2">Masowy</label>
+      </div>
     </div>
-  </div>
 
-  <div *ngIf="!edit && rentalItem.type == 'single'" class="flex flex-col">
-    <label for="item_id" class="mb-2">Przedmiot</label>
+    <div [ngSwitch]="rentalItem.type" [@switchAnimations]="rentalItem.type">
+      <div *ngSwitchCase="'single'" class="flex flex-col">
+        <label for="item_id" class="mb-2">Przedmiot</label>
 
-    <p-dropdown [options]="items" inputId="item_id" [(ngModel)]="rentalItem.item_id" name="item_id" #item_id="ngModel"
-      optionLabel="serial_number" optionValue="id" placeholder="Wybierz przedmiot" [filter]="true"
-      filterBy="serial_number" [showClear]="true" styleClass="w-full" [required]="true"
-      [existItem]="rentalItem.equipment_id" [uniqueItemInRental]="[itemId, idRental]">
-      <ng-template let-equip pTemplate="item">
-        <div class="flex align-items-center gap-2">
-          <div>{{ equip.serial_number }}</div>
-        </div>
-      </ng-template>
-    </p-dropdown>
+        <p-dropdown [options]="items" inputId="item_id" [(ngModel)]="rentalItem.item_id" name="item_id"
+          #item_id="ngModel" optionLabel="serial_number" optionValue="id" placeholder="Wybierz przedmiot"
+          [filter]="true" filterBy="serial_number" [showClear]="true" styleClass="w-full" [required]="true"
+          [existItem]="rentalItem.equipment_id" [uniqueItemInRental]="[itemId, idRental]">
+          <ng-template let-equip pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>{{ equip.serial_number }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
 
-    <app-control-error [control]="item_id.control" [submitted]="form.submitted" name="przedmiot">
-    </app-control-error>
-  </div>
+        <app-control-error [control]="item_id.control" [submitted]="form.submitted" name="przedmiot">
+        </app-control-error>
+      </div>
 
-  <div *ngIf="!edit && rentalItem.type == 'multiple'" class="flex flex-col">
-    <label for="quantity" class="mb-2">Ilość</label>
+      <div *ngSwitchCase="'multiple'" class="flex flex-col">
+        <label for="quantity" class="mb-2">Ilość</label>
 
-    <p-inputNumber id="quantity" [(ngModel)]="rentalItem.quantity" name="quantity" #quantity="ngModel"
-      [showButtons]="true" styleClass="w-full" [required]="true" [min]="1" [max]="available"></p-inputNumber>
+        <p-inputNumber id="quantity" [(ngModel)]="rentalItem.quantity" name="quantity" #quantity="ngModel"
+          [showButtons]="true" styleClass="w-full" [required]="true" [min]="1" [max]="available"></p-inputNumber>
 
-    <app-control-error [control]="quantity.control" [submitted]="form.submitted" name="ilość">
-    </app-control-error>
+        <app-control-error [control]="quantity.control" [submitted]="form.submitted" name="ilość">
+        </app-control-error>
+      </div>
+    </div>
   </div>
 
   <div class="flex flex-col">
@@ -68,8 +73,8 @@
     </app-control-error>
   </div>
 
-  <div class="flex justify-end">
-    <p-button type="submit" label="Dodaj" *ngIf="!edit"></p-button>
-    <p-button type="submit" label="Aktualizuj" *ngIf="edit"></p-button>
+  <div [ngSwitch]="edit" class="flex justify-end">
+    <p-button type="submit" label="Dodaj" *ngSwitchCase="false"></p-button>
+    <p-button type="submit" label="Aktualizuj" *ngSwitchCase="true"></p-button>
   </div>
 </form>

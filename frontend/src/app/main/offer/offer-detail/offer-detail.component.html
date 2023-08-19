@@ -1,10 +1,9 @@
 <div class="container mx-auto mt-5">
   <p-card>
     <div>
-      <div>
-        <img *ngIf="equipment.image_url" [src]="equipment.image_url" alt="logo" class="mx-auto w-[300px] h-[300px]" />
-        <img *ngIf="!equipment.image_url" src="/assets/images/empty.svg" alt="logo"
-          class="mx-auto w-[300px] h-[300px]" />
+      <div [ngSwitch]="!equipment.image_url">
+        <img *ngSwitchCase="false" [src]="equipment.image_url" alt="logo" class="mx-auto w-[300px] h-[300px]" />
+        <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="logo" class="mx-auto w-[300px] h-[300px]" />
       </div>
 
       <div class="w-[40rem]">

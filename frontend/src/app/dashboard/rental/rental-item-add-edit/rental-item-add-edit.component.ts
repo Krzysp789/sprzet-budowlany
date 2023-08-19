@@ -1,3 +1,11 @@
+import {
+  animate,
+  query,
+  sequence,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
@@ -23,7 +31,26 @@ import { DataService } from '../../../core/services/data.service';
   templateUrl: './rental-item-add-edit.component.html',
   styleUrls: [
     '../../../../assets/scss/validation.scss'
-  ]
+  ],
+  animations: [
+    trigger('switchAnimations', [
+      transition('* <=> *', [
+        sequence([
+          query(':enter', [
+            style({ opacity: 0, display: 'none' })
+          ], { optional: true }),
+          query(':leave', [
+            animate('100ms', style({ opacity: 0 })),
+            style({ display: 'none' })
+          ], { optional: true }),
+          query(':enter', [
+            style({ display: 'flex' }),
+            animate('100ms', style({ opacity: 1 })),
+          ], { optional: true }),
+        ]),
+      ]),
+    ]),
+  ],
 })
 export class RentalItemAddEditComponent implements OnInit {
   rentalItem = new RentalItemModel();

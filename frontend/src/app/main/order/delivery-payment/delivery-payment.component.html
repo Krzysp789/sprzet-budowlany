@@ -20,7 +20,7 @@
 
           <div>50 zł</div>
         </div>
-        <div *ngIf="orderForm.controls['delivery'].value == 2">
+        <div @insertRemoveTrigger *ngIf="orderForm.controls['delivery'].value == 2">
           <div class="mx-2">
             {{ address?.street_number }} <br>
             {{ address?.post_code }} {{ address?.town }} <br>
@@ -61,7 +61,8 @@
       <p class="mb-2">Płatność: {{ calculatePayment() | currency }}</p>
       <hr class="h-px my-2 bg-gray-200 border-0">
       <p class="mb-2">Łączny koszt: {{ calculateAll() | currency }}</p>
-      <p-button label="Przejdź do podsumowania" [routerLink]="['podsumowanie']" [disabled]="orderForm.invalid"></p-button>
+      <p-button label="Przejdź do podsumowania" [routerLink]="['podsumowanie']"
+        [disabled]="orderForm.invalid"></p-button>
     </div>
   </div>
 

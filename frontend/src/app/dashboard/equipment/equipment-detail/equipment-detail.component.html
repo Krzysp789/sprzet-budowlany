@@ -10,9 +10,9 @@
     </ng-template>
 
     <ng-template pTemplate="content">
-      <div class="flex gap-5 mb-5">
-        <img *ngIf="equipment?.image_url" [src]="equipment?.image_url" alt="sprzęt" class="w-[300px] h-[300px] mr-5">
-        <img *ngIf="!equipment?.image_url" src="/assets/images/empty.svg" alt="sprzęt" class="w-[300px] h-[300px] mr-5">
+      <div class="flex gap-5 mb-5" [ngSwitch]="!equipment?.image_url">
+        <img *ngSwitchCase="false" [src]="equipment?.image_url" alt="sprzęt" class="w-[300px] h-[300px] mr-5">
+        <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-[300px] h-[300px] mr-5">
         <div>
           <ul class="mb-5 space-y-1 text-[#71717A] list-none list-inside">
             <li>
@@ -31,35 +31,32 @@
               <span class="font-semibold text-gray-600">Opis:</span> {{ equipment?.description }}
             </li>
           </ul>
+          <div [@toggleAnimations]="fileDrop">
+            <button pButton *ngIf="!fileDrop" (click)="fileDrop = true" label="Zmiana obrazku"></button>
 
-          <p-button *ngIf="!fileDrop" (onClick)="fileDrop = true" label="Zmiana obrazku"></p-button>
+            <div *ngIf="fileDrop">
+              <div class="flex items-center justify-center w-full mb-2" (dragover)="onDragOver($event)"
+                (drop)="onDropSuccess($event)">
+                <label for="image"
+                  class="flex flex-col items-center justify-center w-full h-64 border border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <i class="pi pi-cloud-upload" style="font-size: 2.5rem"></i>
+                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Kliknij aby wrzucić plik</span>
+                      albo
+                      przeciągnij i upuść</p>
+                    <p class="text-xs text-gray-500">maxsymalny rozmiar 512kB</p>
+                  </div>
+                  <input type="file" id="image" (change)="onChange($event)" class="hidden">
+                </label>
+              </div>
+              <div class="flex justify-between">
+                <span role="alert" class="mt-1 text-sm text-red-600">{{ imageError }}</span>
 
-          <div>
-            <div *ngIf="fileDrop" class="flex items-center justify-center w-full mb-2" (dragover)="onDragOver($event)"
-              (drop)="onDropSuccess($event)">
-              <label for="image"
-                class="flex flex-col items-center justify-center w-full h-64 border border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                  <i class="pi pi-cloud-upload" style="font-size: 2.5rem"></i>
-                  <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Kliknij aby wrzucić plik</span> albo
-                    przeciągnij i upuść</p>
-                  <p class="text-xs text-gray-500">maxsymalny rozmiar 512kB</p>
-                </div>
-                <input type="file" id="image" (change)="onChange($event)" class="hidden">
-              </label>
+                <p-button (onClick)="closeDrop()" label="Anuluj" styleClass="p-button-danger"></p-button>
+              </div>
             </div>
-            <div class="flex justify-between">
-              <span role="alert" class="mt-1 text-sm text-red-600">{{ imageError }}</span>
-
-              <p-button *ngIf="fileDrop" (onClick)="fileDrop = false" label="Anuluj"
-                styleClass="p-button-danger"></p-button>
-            </div>
-
           </div>
-
-
         </div>
-
       </div>
 
       <div class="mb-2">
@@ -79,7 +76,7 @@
               <i class="pi pi-search"></i>
               <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
                 placeholder="Szukaj" #globalFilter />
-              <i *ngIf="globalFilter.value != ''" class="pi pi-times absolute right-3 cursor-pointer text-[#71717A]"
+              <i *ngIf="globalFilter.value" class="pi pi-times absolute right-3 cursor-pointer text-[#71717A]"
                 (click)="clearGlobalFilter()"></i>
             </span>
           </div>

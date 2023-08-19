@@ -35,6 +35,7 @@ export class OfferListComponent implements OnInit {
     ];
     this.getEquipment();
     this.getCategories();
+    if (localStorage.getItem('layout')) this.layout = <string>localStorage.getItem('layout');
   }
 
   getEquipment(): void {
@@ -50,5 +51,10 @@ export class OfferListComponent implements OnInit {
         this.categoryOptions.push(x);
       });
     });
+  }
+
+  changeLayout(event: { layout: string }): void {
+    localStorage.setItem('layout', event.layout);
+    this.layout = event.layout;
   }
 }

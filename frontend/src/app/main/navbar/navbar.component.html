@@ -6,15 +6,15 @@
     </a>
   </ng-template>
 
-  <ng-template pTemplate="end">
+  <ng-template [ngSwitch]="isAuth()" pTemplate="end">
     <button pButton class="p-button-secondary p-button-text" label="Koszyk" [routerLink]="['/koszyk']"
       routerLinkActive="p-menuitem-link-active"></button>
-    <p-button *ngIf="!isAuth()" styleClass="p-button-secondary p-button-text" label="Zaloguj"
+    <p-button *ngSwitchCase="false" styleClass="p-button-secondary p-button-text" label="Zaloguj"
       [routerLink]="['/zaloguj']"></p-button>
-    <p-button *ngIf="!isAuth()" styleClass="p-button-secondary p-button-text" label="Zarejestruj"
+    <p-button *ngSwitchCase="false" styleClass="p-button-secondary p-button-text" label="Zarejestruj"
       [routerLink]="['/zarejestruj']"></p-button>
-    <p-button *ngIf="isAuth() && userData" styleClass="p-button-secondary p-button-text" (click)="menu.toggle($event)"
-      iconPos="right" [icon]="expanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'" [label]="userData.name">
+    <p-button *ngSwitchCase="true" styleClass="p-button-secondary p-button-text" (click)="menu.toggle($event)"
+      iconPos="right" [icon]="expanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'" [label]="$any(userData?.name)">
     </p-button>
     <p-menu #menu [model]="userItems" styleClass="mt-5" [popup]="true"></p-menu>
   </ng-template>

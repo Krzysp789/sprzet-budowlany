@@ -1,3 +1,12 @@
+import {
+  animate,
+  group,
+  query,
+  sequence,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -48,7 +57,34 @@ import { CartService } from '../../core/services/cart.service';
       background-color: rgb(254 226 226);
       border-color: rgb(248 113 113);
     }
-  `]
+  `],
+  animations: [
+    trigger('removeTrigger', [
+      transition(':leave', [
+        group([
+          animate('100ms', style({ height: '0px' })),
+          animate('100ms', style({ opacity: 0 }))
+        ])
+      ])
+    ]),
+    trigger('switchAnimations', [
+      transition(':decrement', [
+        sequence([
+          query(':enter', [
+            style({ opacity: 0, display: 'none' })
+          ], { optional: true }),
+          query(':leave', [
+            animate('100ms', style({ opacity: 0 })),
+            style({ display: 'none' })
+          ], { optional: true }),
+          query(':enter', [
+            style({ display: 'block' }),
+            animate('100ms', style({ opacity: 1 })),
+          ], { optional: true }),
+        ]),
+      ]),
+    ]),
+  ],
 })
 export class CartComponent implements OnInit, OnDestroy {
   rentDetail: RentDetail;
@@ -74,7 +110,7 @@ export class CartComponent implements OnInit, OnDestroy {
     private validators: ValidatorsService,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.rentDetail = this.cartService.getRentDetail;
     this.dateRentalSub = this.dateForm.controls['dateRental'].valueChanges.subscribe(
       val => {
@@ -88,17 +124,17 @@ export class CartComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.dateRentalSub.unsubscribe();
     this.dateDeadlineSub.unsubscribe();
   }
 
-  removeFromCart(equipment: Equipment) {
+  removeFromCart(equipment: Equipment): void {
     this.cartService.removeEquipment(equipment);
     this.rentDetail = this.cartService.getRentDetail;
   }
 
-  clearEquipment() {
+  clearEquipment(): void {
     this.cartService.clearEquipment();
     this.rentDetail = this.cartService.getRentDetail;
   }
@@ -111,7 +147,7 @@ export class CartComponent implements OnInit, OnDestroy {
     }
   }
 
-  decreaseEquipment(equipment: Equipment) {
+  decreaseEquipment(equipment: Equipment): void {
     if (<number>equipment.quantity > 1) {
       if (equipment.quantity) equipment.quantity--;
       this.cartService.updateEquipment(equipment);
@@ -119,7 +155,7 @@ export class CartComponent implements OnInit, OnDestroy {
     }
   }
 
-  calculateSum() {
+  calculateSum(): number {
     return this.cartService.calculateCart();
   }
 }

@@ -13,7 +13,7 @@
             <i class="pi pi-search"></i>
             <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
               placeholder="Szukaj" #globalFilter />
-            <i *ngIf="globalFilter.value != ''" class="pi pi-times absolute right-3 cursor-pointer text-[#71717A]"
+            <i *ngIf="globalFilter.value" class="pi pi-times absolute right-3 cursor-pointer text-[#71717A]"
               (click)="clearGlobalFilter()"></i>
           </span>
         </div>
@@ -45,9 +45,9 @@
       <ng-template pTemplate="body" let-equip>
         <tr>
           <td>{{equip.id}}</td>
-          <td>
-            <img *ngIf="equip.image_url" [src]="equip.image_url" alt="sprzęt" class="w-[50px] h-[40px]">
-            <img *ngIf="!equip.image_url" src="/assets/images/empty.svg" alt="sprzęt" class="w-[50px] h-[40px]">
+          <td [ngSwitch]="!equip.image_url">
+            <img *ngSwitchCase="false" [src]="equip.image_url" alt="sprzęt" class="w-[50px] h-[40px]">
+            <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-[50px] h-[40px]">
           </td>
           <td>{{equip.name}}</td>
           <td>{{equip.category_name}}</td>

@@ -17,10 +17,10 @@
     </app-control-error>
   </div>
 
-  <div class="flex flex-col">
+  <div class="flex flex-col" [ngSwitch]="edit">
     <label for="date_rental" class="mb-2">Data wypożyczenia</label>
 
-    <div *ngIf="!edit">
+    <div *ngSwitchCase="false">
       <input type="date" pInputText id="date_rental" [(ngModel)]="rental.date_rental" name="date_rental"
         #date_rental="ngModel" class="w-full" required afterEqualToday />
 
@@ -28,7 +28,7 @@
       </app-control-error>
     </div>
 
-    <div *ngIf="edit">
+    <div *ngSwitchCase="true">
       <input type="date" pInputText id="date_rental" [(ngModel)]="rental.date_rental" name="date_rental"
         #date_rental="ngModel" class="w-full" required />
 
@@ -81,7 +81,7 @@
     </app-control-error>
   </div>
 
-  <div *ngIf="rental.delivery == DeliveryEnum.dostawa_na_adres" class="flex flex-col">
+  <div @insertRemoveTrigger *ngIf="rental.delivery == DeliveryEnum.dostawa_na_adres" class="flex flex-col">
     <label for="address_id" class="mb-2">Adres dostawy</label>
 
     <p-dropdown [options]="addresses" inputId="address_id" [(ngModel)]="rental.address_id" name="address_id"
@@ -125,8 +125,8 @@
     </app-control-error>
   </div>
 
-  <div class="flex justify-end">
-    <p-button type="submit" label="Dodaj" *ngIf="!edit"></p-button>
-    <p-button type="submit" label="Aktualizuj" *ngIf="edit"></p-button>
+  <div [ngSwitch]="edit" class="flex justify-end">
+    <p-button *ngSwitchCase="false" type="submit" label="Dodaj"></p-button>
+    <p-button *ngSwitchCase="true" type="submit" label="Aktualizuj"></p-button>
   </div>
 </form>

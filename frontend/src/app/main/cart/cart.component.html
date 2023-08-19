@@ -1,84 +1,87 @@
-<div *ngIf="rentDetail.equipment.length == 0" class="container mx-auto mt-5">
-  <div class="flex flex-col items-center mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow">
-    <h5 class="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900">Koszyk jest pusty</h5>
-    <p-button label="Przejdź do oferty" [routerLink]="['/oferta']"></p-button>
+<div [ngSwitch]="rentDetail.equipment.length" class="container mx-auto mt-5"
+  [@switchAnimations]="rentDetail.equipment.length">
+  <div *ngSwitchCase="0">
+    <div class="flex flex-col items-center mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow">
+      <h5 class="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900">Koszyk jest pusty</h5>
+      <p-button label="Przejdź do oferty" [routerLink]="['/oferta']"></p-button>
+    </div>
   </div>
-</div>
 
-<div *ngIf="rentDetail.equipment.length > 0" class="container mx-auto mt-5">
-  <p-card header="Koszyk">
-    <div class="flex justify-between">
-      <div class="w-full lg:w-3/4 mt-4">
-        <hr class="h-px mb-8 bg-gray-200 border-0">
-        <div *ngFor="let equip of rentDetail.equipment">
-          <div class="flex flex-row">
-            <div class="w-32">
-              <img *ngIf="equip.image_url" [src]="equip.image_url" alt="sprzęt" class="w-32 h-12">
-              <img *ngIf="!equip.image_url" src="/assets/images/empty.svg" alt="sprzęt" class="w-32 h-12">
-            </div>
-            <div class="grow">
-              {{equip.name}}
-            </div>
-            <div class="w-40">
-              <div class="inline-flex h-12 rounded-md shadow-sm" role="group">
-                <button type="button" (click)="decreaseEquipment(equip)"
-                  class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
-                  <i class="pi pi-minus"></i>
-                </button>
-                <button type="button" [disabled]="true"
-                  class="w-12 px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200">
-                  {{equip.quantity}}
-                </button>
-                <button type="button" (click)="increaseEquipment(equip)"
-                  class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
-                  <i class="pi pi-plus"></i>
-                </button>
+  <div *ngSwitchDefault="">
+    <p-card header="Koszyk">
+      <div class="flex flex-col lg:flex-row gap-2">
+        <div class="w-full mb-4 lg:w-3/4 lg:mb-0">
+          <div *ngFor="let equip of rentDetail.equipment" @removeTrigger>
+            <div class="flex flex-row border-y py-6 mt-[-1px]">
+              <div [ngSwitch]="!equip.image_url" class="w-32">
+                <img *ngSwitchCase="false" [src]="equip.image_url" alt="sprzęt" class="w-32 h-12">
+                <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-32 h-12">
               </div>
-            </div>
-            <div class="w-32 flex">
-              <div class="my-auto">{{ equip.price | currency }}</div>
-            </div>
-            <div class="w-12">
-              <p-button icon="pi pi-trash" (click)="removeFromCart(equip)" styleClass="p-button-danger"></p-button>
+              <div class="grow">
+                {{equip.name}}
+              </div>
+              <div class="w-40">
+                <div class="inline-flex h-12 rounded-md shadow-sm" role="group">
+                  <button type="button" (click)="decreaseEquipment(equip)"
+                    class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+                    <i class="pi pi-minus"></i>
+                  </button>
+                  <button type="button" [disabled]="true"
+                    class="w-12 px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200">
+                    {{equip.quantity}}
+                  </button>
+                  <button type="button" (click)="increaseEquipment(equip)"
+                    class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+                    <i class="pi pi-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="w-32 flex">
+                <div class="my-auto">{{ equip.price | currency }}</div>
+              </div>
+              <div class="w-12">
+                <p-button icon="pi pi-trash" (click)="removeFromCart(equip)" styleClass="p-button-danger"></p-button>
+              </div>
             </div>
           </div>
-          <hr class="h-px my-8 bg-gray-200 border-0">
-        </div>
-        <div class="flex justify-around">
-          <p-button label="Wyczyść koszyk" (click)="clearEquipment()" styleClass="p-button-danger"></p-button>
-          <p-button label="Przejdź do oferty" [routerLink]="['/oferta']"></p-button>
-        </div>
-      </div>
 
-      <div class="w-full lg:w-1/4 flex">
-        <div class="mx-auto mb-auto border border-gray-200 rounded-lg p-10">
-          <p class="mb-2 text-lg font-semibold">Wybierz datę wypożyczenia</p>
+          <div class="flex justify-around mt-4">
+            <p-button label="Wyczyść koszyk" (click)="clearEquipment()" styleClass="p-button-danger"></p-button>
+            <p-button label="Przejdź do oferty" [routerLink]="['/oferta']"></p-button>
+          </div>
+        </div>
 
-          <form [formGroup]="dateForm">
-            <div class="mb-2">
-              <div class="flex items-center">
-                <label for="dateRental" class="mr-2">Od</label>
-                <input type="date" pInputText id="dateRental" formControlName="dateRental">
+        <div class="w-full lg:w-1/4 flex">
+          <div class="mx-auto mb-auto border border-gray-200 rounded-lg p-10">
+            <p class="mb-2 text-lg font-semibold">Wybierz datę wypożyczenia</p>
+
+            <form [formGroup]="dateForm">
+              <div class="mb-2">
+                <div class="flex items-center">
+                  <label for="dateRental" class="mr-2">Od</label>
+                  <input type="date" pInputText id="dateRental" formControlName="dateRental">
+                </div>
+
+                <app-control-error [control]="dateForm.controls['dateRental']"></app-control-error>
               </div>
 
-              <app-control-error [control]="dateForm.controls['dateRental']"></app-control-error>
-            </div>
+              <div class="mb-3">
+                <div class="flex items-center">
+                  <label for="dateDeadline" class="mr-2">Do</label>
+                  <input type="date" pInputText id="dateDeadline" formControlName="dateDeadline">
+                </div>
 
-            <div class="mb-3">
-              <div class="flex items-center">
-                <label for="dateDeadline" class="mr-2">Do</label>
-                <input type="date" pInputText id="dateDeadline" formControlName="dateDeadline">
+                <app-control-error [control]="dateForm.controls['dateDeadline']"></app-control-error>
               </div>
+            </form>
 
-              <app-control-error [control]="dateForm.controls['dateDeadline']"></app-control-error>
-            </div>
-          </form>
+            <p class="mb-3">Łączny koszt: {{ calculateSum() | currency }}</p>
 
-          <p class="mb-3">Łączny koszt: {{ calculateSum() | currency }}</p>
-
-          <p-button label="Przejdź do dostawy" [routerLink]="['/zamowienie']" [disabled]="dateForm.invalid"></p-button>
+            <p-button label="Przejdź do dostawy" [routerLink]="['/zamowienie']"
+              [disabled]="dateForm.invalid"></p-button>
+          </div>
         </div>
       </div>
-    </div>
-  </p-card>
+    </p-card>
+  </div>
 </div>

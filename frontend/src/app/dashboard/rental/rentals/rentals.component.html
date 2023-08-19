@@ -1,7 +1,7 @@
 <div class="container mx-auto mt-5">
   <p-card header="Wypożyczenia">
-    <p-table #dt1 [value]="rentals.data" [lazy]="true" (onLazyLoad)="loadRentals($event)" [paginator]="true"
-      [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-sm"
+    <p-table #dt1 [value]="rentals.data" [lazy]="true" (onLazyLoad)="loadRentals($event)" [paginator]="true" [rows]="10"
+      [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-sm"
       currentPageReportTemplate="pokazano {first} - {last} z {totalRecords}" [totalRecords]="rentals.total"
       [loading]="loading" [globalFilterFields]="['customer.first_name', 'customer.last_name', 'total_amount', 'notes']">
       <ng-template pTemplate="caption">
@@ -13,7 +13,7 @@
             <i class="pi pi-search"></i>
             <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
               placeholder="Szukaj" #globalFilter />
-            <i *ngIf="globalFilter.value != ''" class="pi pi-times absolute right-3 cursor-pointer text-[#71717A]"
+            <i *ngIf="globalFilter.value" class="pi pi-times absolute right-3 cursor-pointer text-[#71717A]"
               (click)="clearGlobalFilter()"></i>
           </span>
         </div>

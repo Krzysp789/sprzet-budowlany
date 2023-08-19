@@ -1,3 +1,9 @@
+import {
+  animate,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
@@ -37,7 +43,18 @@ import { DataService } from '../../../core/services/data.service';
   templateUrl: './rental-add-edit.component.html',
   styleUrls: [
     '../../../../assets/scss/validation.scss'
-  ]
+  ],
+  animations: [
+    trigger('insertRemoveTrigger', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('100ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('100ms', style({ opacity: 0 }))
+      ])
+    ]),
+  ],
 })
 export class RentalAddEditComponent implements OnInit {
   DeliveryEnum = Delivery;

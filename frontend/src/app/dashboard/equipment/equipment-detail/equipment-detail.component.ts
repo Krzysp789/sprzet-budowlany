@@ -1,3 +1,12 @@
+import {
+  animate,
+  group,
+  query,
+  sequence,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
@@ -30,7 +39,53 @@ import {
 @Component({
   selector: 'app-equipment-detail',
   templateUrl: './equipment-detail.component.html',
-  styleUrls: []
+  styleUrls: [],
+  animations: [
+    trigger('toggleAnimations', [
+      transition('false => true', [
+        sequence([
+          query(':enter', [
+            style({ opacity: 0, display: 'none' }),
+            query('.w-full', [
+              style({ height: '0px' })
+            ])
+          ], { optional: true }),
+          query(':leave', [
+            animate('100ms', style({ opacity: 0 })),
+            style({ display: 'none' })
+          ], { optional: true }),
+          query(':enter', [
+            style({ display: 'block' }),
+            group([
+              animate('100ms', style({ opacity: 1 })),
+              query('.w-full', [
+                animate('200ms', style({ height: '200px' }))
+              ])
+            ])
+          ], { optional: true }),
+        ])
+      ]),
+      transition('true => false', [
+        sequence([
+          query(':enter', [
+            style({ opacity: 0, display: 'none' }),
+          ], { optional: true }),
+          query(':leave', [
+            group([
+              animate('100ms', style({ opacity: 0 })),
+              query('.w-full', [
+                animate('200ms', style({ height: '0px' }))
+              ]),
+            ]),
+          ], { optional: true }),
+          query(':enter', [
+            style({ display: 'flex' }),
+            animate('100ms', style({ opacity: 1 })),
+          ], { optional: true }),
+        ])
+      ]),
+    ])
+  ],
 })
 export class EquipmentDetailComponent implements OnInit, OnDestroy {
   id: number = this.route.snapshot.params['id'];
@@ -65,6 +120,11 @@ export class EquipmentDetailComponent implements OnInit, OnDestroy {
   clearGlobalFilter(): void {
     this.globalFilter.nativeElement.value = '';
     this.dt1.filterGlobal('', 'contains')
+  }
+
+  closeDrop(): void {
+    this.fileDrop = false;
+    this.imageError = null;
   }
 
   getEquipment(): void {
@@ -127,20 +187,20 @@ export class EquipmentDetailComponent implements OnInit, OnDestroy {
     this.ref.onClose.subscribe(() => this.getEquipmentItems());
   }
 
-  onDragOver(event: Event) {
+  onDragOver(event: Event): void {
     event.preventDefault();
   }
 
-  onDropSuccess(event: any) {
+  onDropSuccess(event: any): void {
     event.preventDefault();
     this.updateImage(event.dataTransfer.files);
   }
 
-  onChange(event: any) {
+  onChange(event: any): void {
     this.updateImage(event.target.files);
   }
 
-  updateImage(files: FileList) {
+  updateImage(files: FileList): void {
     if (files.length != 1) {
       this.imageError = 'Plik jest wymagany';
       return;

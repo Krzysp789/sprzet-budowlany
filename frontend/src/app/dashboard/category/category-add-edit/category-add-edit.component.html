@@ -9,8 +9,8 @@
     </app-control-error>
   </div>
 
-  <div class="flex justify-end">
-    <p-button type="submit" label="Dodaj" *ngIf="!edit"></p-button>
-    <p-button type="submit" label="Aktualizuj" *ngIf="edit"></p-button>
+  <div [ngSwitch]="edit" class="flex justify-end">
+    <p-button type="submit" label="Dodaj" *ngSwitchCase="false"></p-button>
+    <p-button type="submit" label="Aktualizuj" *ngSwitchCase="true"></p-button>
   </div>
 </form>

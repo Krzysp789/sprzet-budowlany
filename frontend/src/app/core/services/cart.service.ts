@@ -41,7 +41,6 @@ export class CartService {
     equipment.quantity = 1;
     this.rentDetail.equipment.push(equipment);
     this.saveRent();
-    console.log(this.rentDetail.equipment);
   }
 
   equipmentInCart(id: number): boolean {
