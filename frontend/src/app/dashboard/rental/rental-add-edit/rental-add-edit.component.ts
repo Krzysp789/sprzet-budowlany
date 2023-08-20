@@ -1,9 +1,3 @@
-import {
-  animate,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
@@ -16,6 +10,9 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
+import {
+  insertRemoveAnimation,
+} from 'src/app/core/animations/element-animations';
 import {
   Delivery,
   DeliveryTable,
@@ -44,17 +41,7 @@ import { DataService } from '../../../core/services/data.service';
   styleUrls: [
     '../../../../assets/scss/validation.scss'
   ],
-  animations: [
-    trigger('insertRemoveTrigger', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('100ms', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('100ms', style({ opacity: 0 }))
-      ])
-    ]),
-  ],
+  animations: [insertRemoveAnimation],
 })
 export class RentalAddEditComponent implements OnInit {
   DeliveryEnum = Delivery;

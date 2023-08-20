@@ -1,11 +1,3 @@
-import {
-  animate,
-  query,
-  sequence,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
@@ -18,6 +10,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
+import { switchAnimation } from 'src/app/core/animations/element-animations';
 import { Collection } from 'src/app/core/interfaces/collection';
 import { Equipment } from 'src/app/core/interfaces/equipment';
 import { Item } from 'src/app/core/interfaces/item';
@@ -32,25 +25,7 @@ import { DataService } from '../../../core/services/data.service';
   styleUrls: [
     '../../../../assets/scss/validation.scss'
   ],
-  animations: [
-    trigger('switchAnimations', [
-      transition('* <=> *', [
-        sequence([
-          query(':enter', [
-            style({ opacity: 0, display: 'none' })
-          ], { optional: true }),
-          query(':leave', [
-            animate('100ms', style({ opacity: 0 })),
-            style({ display: 'none' })
-          ], { optional: true }),
-          query(':enter', [
-            style({ display: 'flex' }),
-            animate('100ms', style({ opacity: 1 })),
-          ], { optional: true }),
-        ]),
-      ]),
-    ]),
-  ],
+  animations: [switchAnimation],
 })
 export class RentalItemAddEditComponent implements OnInit {
   rentalItem = new RentalItemModel();
@@ -109,8 +84,10 @@ export class RentalItemAddEditComponent implements OnInit {
     this.items = <Item[]>eq?.items?.filter(
       (item: { status: string | number }) => item.status === 'dostępny'
     );
-    this.rentalItem.pivot.price = eq.price;
-    this.available = <number>eq.available_items_count;
+    if (eq) {
+      this.rentalItem.pivot.price = eq.price;
+      this.available = <number>eq.available_items_count;
+    }
   }
 
   message(type: string, data: OperationResponse): void {

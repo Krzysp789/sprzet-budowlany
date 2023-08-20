@@ -1,10 +1,4 @@
 import {
-  animate,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
-import {
   Component,
   OnDestroy,
   OnInit,
@@ -19,6 +13,9 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
+import {
+  insertRemoveAnimation,
+} from 'src/app/core/animations/element-animations';
 import { Address } from 'src/app/core/interfaces/address';
 import { UserData } from 'src/app/core/interfaces/user-data';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -33,17 +30,7 @@ import {
   selector: 'app-delivery-payment',
   templateUrl: './delivery-payment.component.html',
   styleUrls: [],
-  animations: [
-    trigger('insertRemoveTrigger', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('100ms', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('100ms', style({ opacity: 0 }))
-      ])
-    ]),
-  ],
+  animations: [insertRemoveAnimation],
 })
 export class DeliveryPaymentComponent implements OnInit, OnDestroy {
   orderForm = this.formBuilder.group({

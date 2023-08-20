@@ -1,6 +1,6 @@
 import {
   animate,
-  group,
+  animateChild,
   query,
   sequence,
   style,
@@ -59,15 +59,7 @@ import { CartService } from '../../core/services/cart.service';
     }
   `],
   animations: [
-    trigger('removeTrigger', [
-      transition(':leave', [
-        group([
-          animate('100ms', style({ height: '0px' })),
-          animate('100ms', style({ opacity: 0 }))
-        ])
-      ])
-    ]),
-    trigger('switchAnimations', [
+    trigger('switchTrigger', [
       transition(':decrement', [
         sequence([
           query(':enter', [
@@ -80,9 +72,14 @@ import { CartService } from '../../core/services/cart.service';
           query(':enter', [
             style({ display: 'block' }),
             animate('100ms', style({ opacity: 1 })),
+            animateChild()
           ], { optional: true }),
         ]),
       ]),
+      transition(':leave', [
+        animate('100ms', style({ height: '0px' })),
+        animate('100ms', style({ opacity: 0 }))
+      ])
     ]),
   ],
 })

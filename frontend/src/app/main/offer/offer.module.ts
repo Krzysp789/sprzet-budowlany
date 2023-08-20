@@ -24,13 +24,13 @@ const routes: Routes = [
       {
         path: '',
         component: OfferListComponent,
+        data: { animation: 'LeftPage' },
       },
       {
         path: ':id',
         component: OfferDetailComponent,
-        resolve: {
-          equipment: offerDetailResolver
-        }
+        resolve: { equipment: offerDetailResolver },
+        data: { animation: 'RightPage' },
       },
     ]
   }

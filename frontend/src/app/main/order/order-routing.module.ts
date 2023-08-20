@@ -21,12 +21,15 @@ const routes: Routes = [
       {
         path: '',
         component: DeliveryPaymentComponent,
+        data: { animation: 'Fade' },
       },
       {
         path: 'podsumowanie',
         component: SummaryComponent,
+        data: { animation: 'Appear' },
       },
-    ]
+    ],
+    data: { animation: 'RightPage' }
   },
 ];
 

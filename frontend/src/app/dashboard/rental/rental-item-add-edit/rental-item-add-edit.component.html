@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <div [ngSwitch]="rentalItem.type" [@switchAnimations]="rentalItem.type">
+    <div [ngSwitch]="rentalItem.type" [@switchTrigger]="rentalItem.type">
       <div *ngSwitchCase="'single'" class="flex flex-col">
         <label for="item_id" class="mb-2">Przedmiot</label>
 

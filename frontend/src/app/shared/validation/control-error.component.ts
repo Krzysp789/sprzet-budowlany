@@ -1,14 +1,12 @@
 import {
-  animate,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
-import {
   Component,
   Input,
 } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+
+import {
+  insertRemoveAnimation,
+} from 'src/app/core/animations/element-animations';
 
 @Component({
   selector: 'app-control-error',
@@ -17,17 +15,7 @@ import { AbstractControl } from '@angular/forms';
       {{ control.errors | validate: name }}
     </div>`,
   styles: [`:host {margin: 0 !important;}`,],
-  animations: [
-    trigger('insertRemoveTrigger', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('100ms', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('100ms', style({ opacity: 0 }))
-      ])
-    ]),
-  ],
+  animations: [insertRemoveAnimation],
 })
 export class ControlErrorComponent {
   @Input() control: AbstractControl

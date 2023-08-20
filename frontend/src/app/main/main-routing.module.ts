@@ -22,7 +22,7 @@ const routes: Routes = [
       {
         path: 'koszyk',
         loadComponent: () => import('./cart/cart.component').then(m => m.CartComponent),
-        data: { preload: true }
+        data: { preload: true, animation: 'LeftPage' }
       },
       {
         path: 'zamowienie',

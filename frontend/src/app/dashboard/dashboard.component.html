@@ -1,6 +1,6 @@
 <div class="bg-zinc-200 min-h-screen max-h-max">
   <app-dashboard-navbar></app-dashboard-navbar>
-  <div class="px-1">
+  <div [@routeAnimations]="getRouteAnimationData()" class="px-1">
     <router-outlet></router-outlet>
   </div>
 </div>

@@ -3,6 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  ChildrenOutletContexts,
   NavigationEnd,
   Router,
 } from '@angular/router';
@@ -12,18 +13,25 @@ import {
   MenuItem,
 } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
+import {
+  fadeAppearAnimation,
+} from 'src/app/core/animations/routing-animations';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: [],
-  providers: [ConfirmationService, DialogService]
+  providers: [ConfirmationService, DialogService],
+  animations: [fadeAppearAnimation],
 })
 export class OrderComponent implements OnInit {
   items: MenuItem[];
   route: string;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private contexts: ChildrenOutletContexts
+  ) { }
 
   ngOnInit(): void {
     this.route = this.router.url;
@@ -57,5 +65,9 @@ export class OrderComponent implements OnInit {
         disabled: (this.route == '/koszyk' || this.route == '/zamowienie'),
       },
     ];
+  }
+
+  getRouteAnimationData(): string {
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
 }

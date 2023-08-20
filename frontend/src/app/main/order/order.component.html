@@ -3,7 +3,9 @@
     <div class="mb-12 mt-4 max-w-5xl mx-auto">
       <p-steps [model]="items" [readonly]="false"></p-steps>
     </div>
-    <router-outlet></router-outlet>
+    <div [@routeAnimations]="getRouteAnimationData()">
+      <router-outlet></router-outlet>
+    </div>
   </p-card>
 </div>
 

@@ -47,33 +47,33 @@ const routes: Routes = [
       },
       {
         path: 'sprzet', component: EquipmentComponent,
+        data: { animation: 'LeftPage' },
       },
       {
         path: 'sprzet/:id',
         component: EquipmentDetailComponent,
-        resolve: {
-          equipment: equipmentDeatailResolver
-        }
+        resolve: { equipment: equipmentDeatailResolver },
+        data: { animation: 'RightPage' },
       },
       {
         path: 'klienci', component: CustomersComponent,
+        data: { animation: 'LeftPage' },
       },
       {
         path: 'klienci/:id',
         component: CustomerDetailComponent,
-        resolve: {
-          customer: customerDeatailResolver
-        }
+        resolve: { customer: customerDeatailResolver },
+        data: { animation: 'RightPage' },
       },
       {
         path: 'wypozyczenia', component: RentalsComponent,
+        data: { animation: 'LeftPage' },
       },
       {
         path: 'wypozyczenia/:id',
         component: RentalDetailComponent,
-        resolve: {
-          rental: rentalDeatailResolver
-        }
+        resolve: { rental: rentalDeatailResolver },
+        data: { animation: 'RightPage' },
       },
     ]
   },
