@@ -6,12 +6,13 @@ use App\Models\Item;
 use App\Models\Rental;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Events\CalculateRental;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\ItemResource;
+use App\Http\Resources\ItemCollection;
 use App\Http\Requests\RentalItem\StoreRentalItemRequest;
 use App\Http\Requests\RentalItem\UpdateRentalItemRequest;
-use App\Http\Resources\ItemCollection;
-use App\Http\Resources\ItemResource;
 
 class RentalItemController extends Controller
 {
@@ -43,7 +44,7 @@ class RentalItemController extends Controller
         DB::transaction(function () use ($request, $rental, $item) {
             $rental->items()->attach($request->item_id, $request->pivot);
             $item->update(['status' => 2]);
-            Rental::calculateTotalPrice($rental);
+            CalculateRental::dispatch($rental);
         });
 
         return response()->json([
@@ -60,7 +61,7 @@ class RentalItemController extends Controller
         $item = $rental->items()->findOrFail($item->id);
         DB::transaction(function () use ($request, $rental, $item) {
             $rental->items()->updateExistingPivot($item->id, $request->pivot);
-            Rental::calculateTotalPrice($rental);
+            CalculateRental::dispatch($rental);
         });
 
         return response()->json([
@@ -77,7 +78,7 @@ class RentalItemController extends Controller
         DB::transaction(function () use ($rental, $item) {
             $rental->items()->detach($item->id);
             $item->update(['status' => 1]);
-            Rental::calculateTotalPrice($rental);
+            CalculateRental::dispatch($rental);
         });
 
         return response()->json([

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rental;
 use App\Models\Equipment;
+use App\Events\CalculateRental;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RentalEquipmentRequest;
@@ -24,7 +25,7 @@ class RentalEquipmentController extends Controller
                 $rental->items()->attach($items[$i]->id, $request->pivot);
                 $items[$i]->update(['status' => 2]);
             }
-            Rental::calculateTotalPrice($rental);
+            CalculateRental::dispatch($rental);
         });
 
         return response()->json([
@@ -47,7 +48,7 @@ class RentalEquipmentController extends Controller
                 $rental->items()->detach($item);
                 $item->update(['status' => 1]);
             }
-            Rental::calculateTotalPrice($rental);
+            CalculateRental::dispatch($rental);
         });
 
         return response()->json([

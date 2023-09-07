@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Enums\RentStatus;
 use App\Models\Equipment;
 use Illuminate\Http\Request;
+use App\Events\CalculateRental;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -134,7 +135,7 @@ class SelfRentController extends Controller
                     $items[$i]->update(['status' => 2]);
                 }
             }
-            Rental::calculateTotalPrice($rental);
+            CalculateRental::dispatch($rental);
             return $rental;
         });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rental;
 use Illuminate\Http\Request;
+use App\Events\CalculateRental;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\RentalResource;
@@ -55,7 +56,7 @@ class RentalController extends Controller
     {
         $rental = DB::transaction(function () use ($request) {
             $rental = Rental::create($request->merge(['total_price' => 0])->all());
-            Rental::calculateTotalPrice($rental);
+            CalculateRental::dispatch($rental);
             return $rental;
         });
 
@@ -69,7 +70,7 @@ class RentalController extends Controller
     {
         DB::transaction(function () use ($request, $rental) {
             $rental->update($request->all());
-            Rental::calculateTotalPrice($rental);
+            CalculateRental::dispatch($rental);
         });
 
         return response()->json([

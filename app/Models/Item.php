@@ -4,17 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
 {
     use HasFactory;
-    // SoftDeletes;
-    // CascadeSoftDeletes;
-
-    // protected $cascadeDeletes = [
-    //     'equipments'
-    // ];
 
     protected $fillable = [
         'serial_number',
@@ -31,8 +24,6 @@ class Item extends Model
     public function rentals()
     {
         return $this->belongsToMany(Rental::class)
-            // ->withTrashed()
-            // ->orderBy('id')
             ->withPivot('price');
     }
 }
