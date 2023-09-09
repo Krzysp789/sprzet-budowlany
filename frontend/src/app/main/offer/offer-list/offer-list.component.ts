@@ -3,7 +3,10 @@ import {
   OnInit,
 } from '@angular/core';
 
-import { SelectItem } from 'primeng/api';
+import {
+  LazyLoadEvent,
+  SelectItem,
+} from 'primeng/api';
 import { Collection } from 'src/app/core/interfaces/collection';
 import { Equipment } from 'src/app/core/interfaces/equipment';
 import { DataService } from 'src/app/core/services/data.service';
@@ -14,13 +17,15 @@ import { DataService } from 'src/app/core/services/data.service';
   styleUrls: []
 })
 export class OfferListComponent implements OnInit {
-  equipment: Equipment[];
-  layout: string = 'list';
+  equipment: Collection<Equipment> = { data: [], total: 0 };
+  layout: string = 'grid';
   sortOptions: SelectItem[];
   sortKey: string = 'name';
   categories: any;
   category: string = '';
   categoryOptions: SelectItem[];
+  loading: boolean = true;
+  event: LazyLoadEvent | null;
 
   constructor(private dataService: DataService) { }
 
@@ -38,9 +43,16 @@ export class OfferListComponent implements OnInit {
     if (localStorage.getItem('layout')) this.layout = <string>localStorage.getItem('layout');
   }
 
-  getEquipment(): void {
-    this.dataService.offerIndex(this.sortKey, this.category).subscribe((res: Collection<Equipment>) => {
-      this.equipment = res.data;
+  loadEquipment(event: LazyLoadEvent): void {
+    this.loading = true;
+    this.event = event;
+    this.getEquipment(this.event);
+  }
+
+  getEquipment(event: LazyLoadEvent | null = null): void {
+    this.dataService.offerIndex(event, this.sortKey, this.category).subscribe((res: Collection<Equipment>) => {
+      this.equipment = res;
+      this.loading = false;
     });
   }
 

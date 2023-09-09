@@ -27,6 +27,7 @@ class SelfRentController extends Controller
                 $query->where('status', 'dostępny');
             },
         ]);
+
         if ($request->cat != null) {
             $offer = $offer->where('category_id', $request->cat);
         }
@@ -43,6 +44,12 @@ class SelfRentController extends Controller
             $offer = $offer->sortBy([[$sort, $order]])->values();
         }
 
+        $total = $offer->count();
+
+        if ($request->first != null && $request->rows != null) {
+            $offer = $offer->skip($request->first)->take($request->rows)->values();
+        }
+
         $offer->each(function ($equip) {
             if (!empty(Storage::disk('eqImg')->files($equip->id))) {
                 $equip->image_url = Storage::disk('eqImg')
@@ -50,8 +57,9 @@ class SelfRentController extends Controller
             }
         });
 
-        return response()->json(new EquipmentCollection($offer, $offer->count()));
+        return response()->json(new EquipmentCollection($offer, $total));
     }
+
     public function offerShow(Equipment $equipment): JsonResponse
     {
         $offer = Equipment::withCount([

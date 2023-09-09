@@ -45,9 +45,10 @@ export class DataService {
   }
 
   // Offer
-  offerIndex(sort: string = 'name', cat: string = ''): Observable<Collection<Equipment>> {
+  offerIndex(event: LazyLoadEvent | null = null, sort: string = 'name', cat: string = ''): Observable<Collection<Equipment>> {
     return this.http.get<Collection<Equipment>>(`${env.apiUrl}/offer`, {
-      params: new HttpParams().appendAll({ sort: sort, cat: cat })
+      params: event != null ? this.setParams(event).appendAll({ sort: sort, cat: cat }) :
+        new HttpParams().appendAll({ sort: sort, cat: cat }),
     });
   }
 

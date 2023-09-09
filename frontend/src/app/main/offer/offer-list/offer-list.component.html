@@ -1,14 +1,16 @@
 <div class="container mx-auto mt-5">
-  <div class="p-6 bg-white border border-gray-200 rounded-lg shadow mb-1">
-    <p-dataView #dv [value]="equipment" [layout]="layout" [rows]="20" [paginator]="true"
-      emptyMessage="Nie znaleziono sprzętów" (onChangeLayout)="changeLayout($event)">
+  <div class="p-6 mb-1 bg-white border border-gray-200 rounded-lg shadow">
+    <p-dataView #dv [value]="equipment.data" [layout]="layout" [rows]="20" [lazy]="true"
+      (onLazyLoad)="loadEquipment($event)" [paginator]="true" [rows]="10" [paginator]="true" [loading]="loading"
+      currentPageReportTemplate="pokazano {first} - {last} z {totalRecords}" [showCurrentPageReport]="true"
+      [totalRecords]="equipment.total" emptyMessage="Nie znaleziono sprzętów" (onChangeLayout)="changeLayout($event)">
       <ng-template pTemplate="header">
         <div class="flex">
-          <div class="flex justify-content-end mr-3">
+          <div class="flex mr-3 justify-content-end">
             <span class="my-auto mr-1">Widok</span>
             <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
           </div>
-          <div class="flex flex-column md:flex-row md:justify-content-between mr-3">
+          <div class="flex mr-3 flex-column md:flex-row md:justify-content-between">
             <span class="my-auto mr-1">Sortowanie</span>
             <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" (onChange)="getEquipment()"
               styleClass="mb-2 md:mb-0"></p-dropdown>
@@ -29,7 +31,7 @@
               <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-[100px] h-[100px]" />
             </div>
 
-            <div class="shrink w-full">
+            <div class="w-full shrink">
               <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ equip.name }}</h5>
             </div>
 
@@ -46,7 +48,7 @@
 
       <ng-template let-equip pTemplate="gridItem" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <a [routerLink]="[equip.id]" class="flex flex-col justify-center border-y w-full p-4 hover:bg-zinc-100/100">
+          <a [routerLink]="[equip.id]" class="flex flex-col justify-center w-full p-4 border-y hover:bg-zinc-100/100">
             <div [ngSwitch]="!equip.image_url" class="mx-auto">
               <img *ngSwitchCase="false" [src]="equip.image_url" alt="sprzęt" class="w-[200px] h-[200px]" />
               <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-[200px] h-[200px]" />
