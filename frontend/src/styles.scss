@@ -8,16 +8,7 @@ html {
 }
 
 body {
-  overflow-y: scroll;
-}
-
-body::-webkit-scrollbar {
-  display: none;
-}
-
-body {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  overflow-x: hidden;
 }
 
 .p-input-icon-left input {

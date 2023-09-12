@@ -1,5 +1,6 @@
 import {
   Component,
+  HostListener,
   OnInit,
 } from '@angular/core';
 
@@ -38,7 +39,6 @@ export class OfferListComponent implements OnInit {
     this.categoryOptions = [
       { label: 'Wszystkie', value: '' },
     ];
-    this.getEquipment();
     this.getCategories();
     if (localStorage.getItem('layout')) this.layout = <string>localStorage.getItem('layout');
   }
@@ -56,6 +56,19 @@ export class OfferListComponent implements OnInit {
     });
   }
 
+  loadNextEquipment() {
+    if (this.event?.first != null) {
+      this.event.first = this.event.first + 10;
+      if (this.event.first + 9 < this.equipment.total && this.equipment.total != 0) {
+        this.loading = true;
+        this.dataService.offerIndex(this.event, this.sortKey, this.category).subscribe((res: Collection<Equipment>) => {
+          this.equipment.data = this.equipment.data.concat(res.data);
+          this.loading = false;
+        });
+      }
+    }
+  }
+
   getCategories(): void {
     this.dataService.selfCategories().subscribe(res => {
       this.categories = res;
@@ -68,5 +81,14 @@ export class OfferListComponent implements OnInit {
   changeLayout(event: { layout: string }): void {
     localStorage.setItem('layout', event.layout);
     this.layout = event.layout;
+  }
+
+  @HostListener("window:scroll", ["$event"])
+  onWindowScroll() {
+    let pos = (document.documentElement.scrollTop || document.body.scrollTop);
+    let max = (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+    if (pos >= max - 10 && !this.loading) {
+      this.loadNextEquipment();
+    }
   }
 }

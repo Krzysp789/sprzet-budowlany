@@ -1,7 +1,7 @@
 <div class="container mx-auto mt-5">
   <div class="p-6 mb-1 bg-white border border-gray-200 rounded-lg shadow">
-    <p-dataView #dv [value]="equipment.data" [layout]="layout" [rows]="20" [lazy]="true"
-      (onLazyLoad)="loadEquipment($event)" [paginator]="true" [rows]="10" [paginator]="true" [loading]="loading"
+    <p-dataView #dv [value]="equipment.data" [layout]="layout" [rows]="10" [lazy]="true"
+      (onLazyLoad)="loadEquipment($event)" [loading]="loading"
       currentPageReportTemplate="pokazano {first} - {last} z {totalRecords}" [showCurrentPageReport]="true"
       [totalRecords]="equipment.total" emptyMessage="Nie znaleziono sprzętów" (onChangeLayout)="changeLayout($event)">
       <ng-template pTemplate="header">
