@@ -51,13 +51,17 @@ class AuthController extends Controller
 
     public function logout(Request $request): JsonResponse
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        if (Auth::user()) {
+            Auth::logout();
+            $request->session()->invalidate();
+            return response()->json([
+                'header' => 'wylogowano pomyślnie',
+            ]);
+        }
 
         return response()->json([
-            'header' => 'wylogowano pomyślnie',
-        ]);
+            'header' => 'Nie udało się znaleźć użytkownika',
+        ], 401);
     }
 
     public function user(Request $request): JsonResponse

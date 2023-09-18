@@ -26,9 +26,14 @@ use App\Http\Controllers\RentalEquipmentController;
 |
 */
 
-Route::post('register', [AuthController::class, 'register']);
-Route::get('user/searchEmail', [AuthController::class, 'searchEmail']);
-Route::get('user', [AuthController::class, 'user'])->middleware(['auth:sanctum']);
+Route::controller(AuthController::class)->group(function () {
+    Route::post('register', 'register');
+    Route::post('login', 'login');
+    Route::post('logout', 'logout');
+    Route::get('user', 'user')->middleware(['auth:sanctum']);
+    Route::get('user/searchEmail', 'searchEmail');
+});
+
 Route::get('customers/{customer}/addresses/search', [CustomerAddressController::class, 'search'])
     ->where('customer', '[0-9]+')->middleware(['auth:sanctum']);
 

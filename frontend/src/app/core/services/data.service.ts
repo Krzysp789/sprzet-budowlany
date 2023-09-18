@@ -28,8 +28,14 @@ import { RentalModel } from '../models/rental.model';
   providedIn: 'root'
 })
 export class DataService {
-
   constructor(private http: HttpClient) { }
+
+  private options(params: HttpParams = new HttpParams) {
+    return {
+      params: params,
+      withCredentials: true
+    };
+  }
 
   private setParams(event: any): HttpParams {
     let params = new HttpParams();
@@ -45,163 +51,149 @@ export class DataService {
   }
 
   // Offer
-  offerIndex(event: LazyLoadEvent | null = null, sort: string = 'name', cat: string = ''): Observable<Collection<Equipment>> {
-    return this.http.get<Collection<Equipment>>(`${env.apiUrl}/offer`, {
-      params: event != null ? this.setParams(event).appendAll({ sort: sort, cat: cat }) :
-        new HttpParams().appendAll({ sort: sort, cat: cat }),
-    });
+  offerIndex(
+    event: LazyLoadEvent | null = null, sort: string = 'name', cat: string = ''
+  ): Observable<Collection<Equipment>> {
+    return this.http.get<Collection<Equipment>>(`${env.url}/offer`, this.options(
+      event != null ? this.setParams(event).appendAll({ sort: sort, cat: cat }) :
+        new HttpParams().appendAll({ sort: sort, cat: cat })
+    ));
   }
 
   offerShow(id: number): Observable<Equipment> {
-    return this.http.get<Equipment>(`${env.apiUrl}/offer/${id}`);
+    return this.http.get<Equipment>(`${env.url}/offer/${id}`, this.options());
   }
 
   selfCategories(): Observable<any> {
-    return this.http.get(`${env.apiUrl}/selfCategories`);
+    return this.http.get(`${env.url}/selfCategories`, this.options());
   }
 
   //SelfRent
   indexRent(): Observable<Rental[]> {
-    return this.http.get<Rental[]>(
-      `${env.apiUrl}/customerRents`, { withCredentials: true }
-    );
+    return this.http.get<Rental[]>(`${env.url}/customerRents`, this.options());
   }
 
   storeRent(data: any): Observable<OperationResponse> {
-    return this.http.post<OperationResponse>(
-      `${env.apiUrl}/storeRent`, data, { withCredentials: true }
-    );
+    return this.http.post<OperationResponse>(`${env.url}/storeRent`, data, this.options());
   }
 
   //SelfAddress
   selfAddressIndex(): Observable<Collection<Address>> {
-    return this.http.get<Collection<Address>>(
-      `${env.apiUrl}/selfAddresses`, { withCredentials: true }
-    );
+    return this.http.get<Collection<Address>>(`${env.url}/selfAddresses`, this.options());
   }
 
   selfAddressShow(id: number): Observable<Address> {
-    return this.http.get<Address>(
-      `${env.apiUrl}/selfAddresses/${id}`, { withCredentials: true }
-    );
+    return this.http.get<Address>(`${env.url}/selfAddresses/${id}`, this.options());
   }
 
   selfAddressStore(data: AddressModel): Observable<OperationResponse> {
     return this.http.post<OperationResponse>(
-      `${env.apiUrl}/selfAddresses`, data, { withCredentials: true }
+      `${env.url}/selfAddresses`, data, this.options()
     );
   }
 
   selfAddressUpdate(data: AddressModel, id: number): Observable<OperationResponse> {
     return this.http.patch<OperationResponse>(
-      `${env.apiUrl}/selfAddresses/${id}`, data, { withCredentials: true }
+      `${env.url}/selfAddresses/${id}`, data, this.options()
     );
   }
 
   selfAddressDestroy(id: number): Observable<OperationResponse> {
     return this.http.delete<OperationResponse>(
-      `${env.apiUrl}/selfAddresses/${id}`, { withCredentials: true }
+      `${env.url}/selfAddresses/${id}`, this.options()
     );
   }
 
   selfAddressShowActive(): Observable<Address> {
-    return this.http.get<Address>(
-      `${env.apiUrl}/selfAddresses/active`, { withCredentials: true }
-    );
+    return this.http.get<Address>(`${env.url}/selfAddresses/active`, this.options());
   }
 
   selfAddressSetActive(id: number): Observable<Address> {
     return this.http.post<Address>(
-      `${env.apiUrl}/selfAddresses/${id}/active`, null, { withCredentials: true }
+      `${env.url}/selfAddresses/${id}/active`, null, this.options()
     );
   }
 
   //Category
   categoriesIndex(event: LazyLoadEvent | null = null): Observable<Collection<Category>> {
-    return this.http.get<Collection<Category>>(`${env.apiUrl}/categories`, {
-      params: event != null ? this.setParams(event) : new HttpParams,
-      withCredentials: true,
-    });
+    return this.http.get<Collection<Category>>(
+      `${env.url}/categories`,
+      this.options(event != null ? this.setParams(event) : new HttpParams)
+    );
   }
 
   categoriesShow(id: number): Observable<Category> {
-    return this.http.get<Category>(
-      `${env.apiUrl}/categories/` + id, { withCredentials: true }
-    );
+    return this.http.get<Category>(`${env.url}/categories/` + id, this.options());
   }
 
   categoriesStore(data: CategoryModel): Observable<OperationResponse> {
     return this.http.post<OperationResponse>(
-      `${env.apiUrl}/categories`, data, { withCredentials: true }
+      `${env.url}/categories`, data, this.options()
     );
   }
 
   categoriesUpdate(data: CategoryModel, id: number): Observable<OperationResponse> {
     return this.http.patch<OperationResponse>(
-      `${env.apiUrl}/categories/` + id, data, { withCredentials: true }
+      `${env.url}/categories/` + id, data, this.options()
     );
   }
 
   categoriesDestroy(id: number): Observable<OperationResponse> {
     return this.http.delete<OperationResponse>(
-      `${env.apiUrl}/categories/` + id, { withCredentials: true }
+      `${env.url}/categories/` + id, this.options()
     );
   }
 
   //Equipment
   equipmentIndex(event: LazyLoadEvent | null = null): Observable<Collection<Equipment>> {
-    return this.http.get<Collection<Equipment>>(`${env.apiUrl}/equipment`, {
-      params: event != null ? this.setParams(event) : new HttpParams,
-      withCredentials: true,
-    });
+    return this.http.get<Collection<Equipment>>(
+      `${env.url}/equipment`,
+      this.options(event != null ? this.setParams(event) : new HttpParams)
+    );
   }
 
   equipmentShow(id: number): Observable<Equipment> {
-    return this.http.get<Equipment>(
-      `${env.apiUrl}/equipment/${id}`, { withCredentials: true }
-    );
+    return this.http.get<Equipment>(`${env.url}/equipment/${id}`, this.options());
   }
 
   equipmentStore(data: EquipmentModel): Observable<OperationResponse> {
-    return this.http.post<OperationResponse>(
-      `${env.apiUrl}/equipment`, data, { withCredentials: true }
-    );
+    return this.http.post<OperationResponse>(`${env.url}/equipment`, data, this.options());
   }
 
   equipmentUpdate(data: EquipmentModel, id: number): Observable<OperationResponse> {
     return this.http.patch<OperationResponse>(
-      `${env.apiUrl}/equipment/${id}`, data, { withCredentials: true }
+      `${env.url}/equipment/${id}`, data, this.options()
     );
   }
 
   equipmentDestroy(id: number): Observable<OperationResponse> {
     return this.http.delete<OperationResponse>(
-      `${env.apiUrl}/equipment/${id}`, { withCredentials: true }
+      `${env.url}/equipment/${id}`, this.options()
     );
   }
 
   equipmentUpdateImg(data: any, id: number): Observable<OperationResponse> {
     return this.http.post<OperationResponse>(
-      `${env.apiUrl}/equipment/${id}/updateImg`, data, { withCredentials: true }
+      `${env.url}/equipment/${id}/updateImg`, data, this.options()
     );
   }
 
   //Equipment-item
   equipmentItemsIndex(idEq: number): Observable<Collection<Item>> {
     return this.http.get<Collection<Item>>(
-      `${env.apiUrl}/equipment/${idEq}/items`, { withCredentials: true }
+      `${env.url}/equipment/${idEq}/items`, this.options()
     );
   }
 
   equipmentItemsShow(idEq: number, idIt: number): Observable<Item> {
     return this.http.get<Item>(
-      `${env.apiUrl}/equipment/${idEq}/items/` + idIt, { withCredentials: true }
+      `${env.url}/equipment/${idEq}/items/` + idIt, this.options()
     );
   }
 
   equipmentItemsStore(data: ItemModel, idEq: number): Observable<OperationResponse> {
     return this.http.post<OperationResponse>(
-      `${env.apiUrl}/equipment/${idEq}/items`, data, { withCredentials: true }
+      `${env.url}/equipment/${idEq}/items`, data, this.options()
     );
   }
 
@@ -209,58 +201,54 @@ export class DataService {
     data: ItemModel, idEq: number, idIt: number
   ): Observable<OperationResponse> {
     return this.http.patch<OperationResponse>(
-      `${env.apiUrl}/equipment/${idEq}/items/${idIt}`, data, { withCredentials: true }
+      `${env.url}/equipment/${idEq}/items/${idIt}`, data, this.options()
     );
   }
 
   equipmentItemsDestroy(idEq: number, idIt: number): Observable<OperationResponse> {
     return this.http.delete<OperationResponse>(
-      `${env.apiUrl}/equipment/${idEq}/items/${idIt}`, { withCredentials: true }
+      `${env.url}/equipment/${idEq}/items/${idIt}`, this.options()
     );
   }
 
   //Customer
   customersIndex(event: LazyLoadEvent | null = null): Observable<Collection<Customer>> {
-    return this.http.get<Collection<Customer>>(`${env.apiUrl}/customers`, {
-      params: event != null ? this.setParams(event) : new HttpParams,
-      withCredentials: true,
-    });
+    return this.http.get<Collection<Customer>>(
+      `${env.url}/customers`,
+      this.options(event != null ? this.setParams(event) : new HttpParams)
+    );
   }
 
   customersShow(id: number): Observable<Customer> {
-    return this.http.get<Customer>(
-      `${env.apiUrl}/customers/${id}`, { withCredentials: true }
-    );
+    return this.http.get<Customer>(`${env.url}/customers/${id}`, this.options());
   }
 
   customersStore(data: CustomerModel): Observable<OperationResponse> {
-    return this.http.post<OperationResponse>(
-      `${env.apiUrl}/customers`, data, { withCredentials: true }
-    );
+    return this.http.post<OperationResponse>(`${env.url}/customers`, data, this.options());
   }
 
   customersUpdate(data: CustomerModel, id: number): Observable<OperationResponse> {
     return this.http.patch<OperationResponse>(
-      `${env.apiUrl}/customers/${id}`, data, { withCredentials: true }
+      `${env.url}/customers/${id}`, data, this.options()
     );
   }
 
   customersDestroy(id: number): Observable<OperationResponse> {
     return this.http.delete<OperationResponse>(
-      `${env.apiUrl}/customers/${id}`, { withCredentials: true }
+      `${env.url}/customers/${id}`, this.options()
     );
   }
 
   //Customer-address
   customersAddressesIndex(idCust: number): Observable<Collection<Address>> {
     return this.http.get<Collection<Address>>(
-      `${env.apiUrl}/customers/${idCust}/addresses`, { withCredentials: true }
+      `${env.url}/customers/${idCust}/addresses`, this.options()
     );
   }
 
   customersAddressesShow(idCust: number, idAddr: number): Observable<Address> {
     return this.http.get<Address>(
-      `${env.apiUrl}/customers/${idCust}/addresses/${idAddr}`, { withCredentials: true }
+      `${env.url}/customers/${idCust}/addresses/${idAddr}`, this.options()
     );
   }
 
@@ -268,7 +256,7 @@ export class DataService {
     data: AddressModel, idCust: number
   ): Observable<OperationResponse> {
     return this.http.post<OperationResponse>(
-      `${env.apiUrl}/customers/${idCust}/addresses`, data, { withCredentials: true }
+      `${env.url}/customers/${idCust}/addresses`, data, this.options()
     );
   }
 
@@ -276,8 +264,7 @@ export class DataService {
     data: AddressModel, idCust: number, idAddr: number
   ): Observable<OperationResponse> {
     return this.http.patch<OperationResponse>(
-      `${env.apiUrl}/customers/${idCust}/addresses/${idAddr}`,
-      data, { withCredentials: true }
+      `${env.url}/customers/${idCust}/addresses/${idAddr}`, data, this.options()
     );
   }
 
@@ -285,58 +272,52 @@ export class DataService {
     idCust: number, idAddr: number
   ): Observable<OperationResponse> {
     return this.http.delete<OperationResponse>(
-      `${env.apiUrl}/customers/${idCust}/addresses/${idAddr}`, { withCredentials: true }
+      `${env.url}/customers/${idCust}/addresses/${idAddr}`, this.options()
     );
   }
 
   //Rental
   rentalsIndex(event: LazyLoadEvent | null = null): Observable<Collection<Rental>> {
-    return this.http.get<Collection<Rental>>(`${env.apiUrl}/rentals`, {
-      params: event != null ? this.setParams(event) : new HttpParams,
-      withCredentials: true,
-    });
+    return this.http.get<Collection<Rental>>(
+      `${env.url}/rentals`,
+      this.options(event != null ? this.setParams(event) : new HttpParams)
+    );
   }
 
   rentalsShow(id: number): Observable<Rental> {
-    return this.http.get<Rental>(
-      `${env.apiUrl}/rentals/${id}`, { withCredentials: true }
-    );
+    return this.http.get<Rental>(`${env.url}/rentals/${id}`, this.options());
   }
 
   rentalsStore(data: RentalModel): Observable<OperationResponse> {
-    return this.http.post<OperationResponse>(
-      `${env.apiUrl}/rentals`, data, { withCredentials: true }
-    );
+    return this.http.post<OperationResponse>(`${env.url}/rentals`, data, this.options());
   }
 
   rentalsUpdate(data: RentalModel, id: number): Observable<OperationResponse> {
     return this.http.patch<OperationResponse>(
-      `${env.apiUrl}/rentals/${id}`, data, { withCredentials: true }
+      `${env.url}/rentals/${id}`, data, this.options()
     );
   }
 
   rentalsDestroy(id: number): Observable<OperationResponse> {
-    return this.http.delete<OperationResponse>(
-      `${env.apiUrl}/rentals/${id}`, { withCredentials: true }
-    );
+    return this.http.delete<OperationResponse>(`${env.url}/rentals/${id}`, this.options());
   }
 
   //Rental-Items
   rentalsItemsIndex(idRen: number): Observable<Collection<Item>> {
     return this.http.get<Collection<Item>>(
-      `${env.apiUrl}/rentals/${idRen}/items`, { withCredentials: true }
+      `${env.url}/rentals/${idRen}/items`, this.options()
     );
   }
 
   rentalsItemsShow(idRen: number, idItem: number): Observable<Item> {
     return this.http.get<Item>(
-      `${env.apiUrl}/rentals/${idRen}/items/${idItem}`, { withCredentials: true }
+      `${env.url}/rentals/${idRen}/items/${idItem}`, this.options()
     );
   }
 
   rentalsItemsStore(data: RentalItemModel, idRen: number): Observable<OperationResponse> {
     return this.http.post<OperationResponse>(
-      `${env.apiUrl}/rentals/${idRen}/items`, data, { withCredentials: true }
+      `${env.url}/rentals/${idRen}/items`, data, this.options()
     );
   }
 
@@ -344,13 +325,13 @@ export class DataService {
     data: RentalItemModel, idRen: number, idIt: number
   ): Observable<OperationResponse> {
     return this.http.patch<OperationResponse>(
-      `${env.apiUrl}/rentals/${idRen}/items/${idIt}`, data, { withCredentials: true }
+      `${env.url}/rentals/${idRen}/items/${idIt}`, data, this.options()
     );
   }
 
   rentalsItemsDestroy(idRen: number, idIt: number): Observable<OperationResponse> {
     return this.http.delete<OperationResponse>(
-      `${env.apiUrl}/rentals/${idRen}/items/${idIt}`, { withCredentials: true }
+      `${env.url}/rentals/${idRen}/items/${idIt}`, this.options()
     );
   }
 
@@ -359,66 +340,65 @@ export class DataService {
     data: RentalItemModel, idRen: number
   ): Observable<OperationResponse> {
     return this.http.post<OperationResponse>(
-      `${env.apiUrl}/rentals/${idRen}/equipment`, data, { withCredentials: true }
+      `${env.url}/rentals/${idRen}/equipment`, data, this.options()
     );
   }
 
   rentalsEquipmentDestroy(idRen: number, idEq: number): Observable<OperationResponse> {
     return this.http.delete<OperationResponse>(
-      `${env.apiUrl}/rentals/${idRen}/equipment/${idEq}`, { withCredentials: true }
+      `${env.url}/rentals/${idRen}/equipment/${idEq}`, this.options()
     );
   }
 
   //Validation
   usersSearch(val: string): Observable<boolean> {
-    return this.http.get<boolean>(`${env.apiUrl}/user/searchEmail`, {
-      withCredentials: true,
-      params: new HttpParams().append("val", val)
-    });
+    return this.http.get<boolean>(
+      `${env.url}/user/searchEmail`, this.options(new HttpParams().append("val", val))
+    );
   }
 
   categoriesSearch(attr: string, val: string): Observable<boolean> {
-    return this.http.get<boolean>(`${env.apiUrl}/categories/search`, {
-      params: new HttpParams().appendAll({ attr: attr, val: val }),
-      withCredentials: true,
-    });
+    return this.http.get<boolean>(
+      `${env.url}/categories/search`,
+      this.options(new HttpParams().appendAll({ attr: attr, val: val }))
+    );
   }
 
   equipmentSearch(attr: string, val: string): Observable<boolean> {
-    return this.http.get<boolean>(`${env.apiUrl}/equipment/search`, {
-      params: new HttpParams().appendAll({ attr: attr, val: val }),
-      withCredentials: true,
-    });
+    return this.http.get<boolean>(
+      `${env.url}/equipment/search`,
+      this.options(new HttpParams().appendAll({ attr: attr, val: val }))
+    );
   }
 
   itemsSearch(attr: string, val: string, idEq: number): Observable<boolean> {
-    return this.http.get<boolean>(`${env.apiUrl}/equipment/${idEq}/items/search`, {
-      params: new HttpParams().appendAll({ attr: attr, val: val }),
-      withCredentials: true,
-    });
+    return this.http.get<boolean>(
+      `${env.url}/equipment/${idEq}/items/search`,
+      this.options(new HttpParams().appendAll({ attr: attr, val: val }))
+    );
   }
 
   customersSearch(attr: string, val: string): Observable<boolean> {
-    return this.http.get<boolean>(`${env.apiUrl}/customers/search`, {
-      params: new HttpParams().appendAll({ attr: attr, val: val }),
-      withCredentials: true,
-    });
+    return this.http.get<boolean>(
+      `${env.url}/customers/search`,
+      this.options(new HttpParams().appendAll({ attr: attr, val: val }))
+    );
   }
 
   customersAddressesSearch(
-    attr: string, val: string, idcust: number
+    attr: string, val: string, idCust: number
   ): Observable<boolean> {
-    return this.http.get<boolean>(`${env.apiUrl}/customers/${idcust}/addresses/search`, {
-      params: new HttpParams().appendAll({ attr: attr, val: val }),
-      withCredentials: true,
-    });
+    return this.http.get<boolean>(
+      `${env.url}/customers/${idCust}/addresses/search`,
+      this.options(new HttpParams().appendAll({ attr: attr, val: val }))
+    );
   }
 
   rentalsItemsSearch(val: string, idRen: number): Observable<boolean> {
-    return this.http.get<boolean>(`${env.apiUrl}/rentals/${idRen}/items/search`, {
-      params: new HttpParams().append("val", val),
-      withCredentials: true,
-    });
+    return this.http.get<boolean>(
+      `${env.url}/rentals/${idRen}/items/search`,
+      this.options(new HttpParams().append("val", val))
+    );
   }
 }
 

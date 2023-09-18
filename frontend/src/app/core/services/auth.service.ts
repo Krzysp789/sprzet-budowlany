@@ -21,7 +21,8 @@ import { UserData } from '../interfaces/user-data';
 export class AuthService {
   userData: UserData | null = null;
   loggedOut = new Subject<boolean>();
-  returnUrl: string = '/'
+  returnUrl: string = '/';
+  private options = { withCredentials: true };
 
   constructor(
     private router: Router,
@@ -39,19 +40,17 @@ export class AuthService {
   }
 
   setToken(): Observable<any> {
-    return this.httpClient.get(`${env.url}/sanctum/csrf-cookie`, { withCredentials: true });
+    return this.httpClient.get(`//localhost:8000/sanctum/csrf-cookie`, this.options);
   }
 
   register(data: any): Observable<any> {
-    return this.httpClient.post(`${env.apiUrl}/register`, data, { withCredentials: true });
+    return this.httpClient.post(`${env.url}/register`, data, this.options);
   }
 
   login(data: any): Observable<UserData> {
     return this.setToken().pipe(switchMap(() => {
-      return this.httpClient.post<UserData>(
-        `${env.url}/login`, data, { withCredentials: true }
-      ).pipe(map(
-        (res: UserData) => {
+      return this.httpClient.post<UserData>(`${env.url}/login`, data, this.options).pipe(
+        map((res: UserData) => {
           this.userData = res;
           localStorage.setItem('auth', JSON.stringify(res));
           let employee = false;
@@ -67,13 +66,13 @@ export class AuthService {
             this.returnUrl = '/';
           }
           return res;
-        }
-      ));
+        })
+      );
     }));
   }
 
   getUserData(): Observable<UserData> {
-    return this.httpClient.get<UserData>(`${env.apiUrl}/user`, { withCredentials: true });
+    return this.httpClient.get<UserData>(`${env.url}/user`, this.options);
   }
 
   authStatus(): Observable<AuthStatus> {
@@ -97,13 +96,11 @@ export class AuthService {
   }
 
   logout(): void {
-    this.httpClient.post(`${env.url}/logout`, null, { withCredentials: true }).subscribe(
-      () => {
-        this.userData = null;
-        localStorage.setItem('auth', JSON.stringify({}));
-        this.loggedOut.next(true);
-        this.router.navigate(['/']);
-      }
-    );
+    this.httpClient.post(`${env.url}/logout`, null, this.options).subscribe(() => {
+      this.userData = null;
+      localStorage.setItem('auth', JSON.stringify({}));
+      this.loggedOut.next(true);
+      this.router.navigate(['/']);
+    });
   }
 }
