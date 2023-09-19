@@ -1,4 +1,4 @@
-<div class="container mx-auto mt-5 flex flex-col lg:flex-row gap-2">
+<div class="container flex flex-col gap-2 mx-auto mt-5 lg:flex-row">
   <div class="w-full mb-4 lg:w-3/4 lg:mb-0">
     <div [ngSwitch]="rentDetail.delivery" styleClass="mb-8">
       <p class="text-xl font-semibold">Dostawa</p>
@@ -31,21 +31,21 @@
     </div>
 
     <div>
-      <p class="text-xl font-semibold mb-2">Koszyk</p>
+      <p class="mb-2 text-xl font-semibold">Koszyk</p>
       <div *ngIf="rentDetail.equipment.length > 0">
         <div *ngFor="let equip of rentDetail.equipment">
           <div class="flex flex-row border-y py-6 mt-[-1px]">
-            <div [ngSwitch]="!equip.image_url" class="w-32">
-              <img *ngSwitchCase="false" [src]="equip.image_url" alt="sprzęt" class="w-32 h-12">
+            <div [ngSwitch]="!equip.img_url" class="w-32">
+              <img *ngSwitchCase="false" [src]="equip.img_url" alt="sprzęt" class="w-32 h-12">
               <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-32 h-12">
             </div>
             <div class="grow">
               {{equip.name}}
             </div>
-            <div class="w-40 flex">
+            <div class="flex w-40">
               <div class="my-auto">{{ equip.quantity }} szt</div>
             </div>
-            <div class="w-32 flex">
+            <div class="flex w-32">
               <div class="my-auto">{{ equip.price | currency }}</div>
             </div>
           </div>
@@ -55,8 +55,8 @@
   </div>
 
 
-  <div class="w-full lg:w-1/4 flex">
-    <div class="mx-auto mb-auto border border-gray-200 rounded-lg p-10">
+  <div class="flex w-full lg:w-1/4">
+    <div class="p-10 mx-auto mb-auto border border-gray-200 rounded-lg">
       <p class="mb-2">Wartość koszyka: {{ calculateCart() | currency }}</p>
       <p class="mb-2">Dostawa: {{ calculateDelivery() | currency }}</p>
       <p class="mb-2">Płatność: {{ calculatePayment() | currency }}</p>

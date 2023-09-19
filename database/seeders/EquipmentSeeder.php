@@ -14,13 +14,17 @@ class EquipmentSeeder extends Seeder
      */
     public function run(): void
     {
+        foreach (Storage::disk('imgEq')->files() as $img) {
+            if ($img != '.gitignore') Storage::disk('imgEq')->delete($img);
+        };
         Equipment::factory()->count(50)->create()->each(function ($equipment) {
-            foreach (Storage::disk('eqImg')->files($equipment->id) as $img) {
-                Storage::delete("eqImg/$img");
-            };
             $file = Storage::allFiles('exampleEq');
             $file = $file[fake()->numberBetween(0, count($file) - 1)];
-            Storage::copy($file, "eqImg/$equipment->id/" . substr($file, 10));
+            $filePath = "$equipment->id." . pathinfo($file, PATHINFO_EXTENSION);
+            Storage::copy($file, "img_eq/$filePath");
+            $equipment->update([
+                'img_url' => $filePath
+            ]);
             for ($i = 0; $i < fake()->numberBetween(0, 10); $i++) {
                 $item = Item::factory()->create();
                 $item->update(['equipment_id' => $equipment->id]);

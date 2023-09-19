@@ -13,6 +13,7 @@ use App\Http\Resources\EquipmentResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\EquipmentCollection;
+use Illuminate\Support\Facades\File;
 
 class EquipmentController extends Controller
 {
@@ -56,22 +57,11 @@ class EquipmentController extends Controller
             $equipment = $equipment->skip($request->first)->take($request->rows)->values();
         }
 
-        $equipment->each(function ($equip) {
-            if (!empty(Storage::disk('eqImg')->files($equip->id))) {
-                $equip->image_url = Storage::disk('eqImg')
-                    ->url(Storage::disk('eqImg')->files($equip->id)[0]);
-            }
-        });
-
         return response()->json(new EquipmentCollection($equipment, $total));
     }
 
     public function show(Equipment $equipment): JsonResponse
     {
-        if (!empty(Storage::disk('eqImg')->files($equipment->id))) {
-            $equipment->image_url = Storage::disk('eqImg')
-                ->url(Storage::disk('eqImg')->files($equipment->id)[0]);
-        }
         return response()->json(new EquipmentResource($equipment));
     }
 
@@ -130,12 +120,12 @@ class EquipmentController extends Controller
                 'message' => implode(' ', $validator->errors()->all())
             ], 422);
         }
+        if ($equipment->img_url)
+            Storage::disk('imgEq')->delete($equipment->img_url);
 
-        foreach (Storage::disk('eqImg')->files($equipment->id) as $img) {
-            Storage::delete("eqImg/$img");
-        };
-
-        Storage::putFile("eqImg/$equipment->id", $request->file('image'));
+        $filePath = "$equipment->id.{$request->file('image')->extension()}";
+        Storage::putFileAs("img_eq", $request->file('image'), $filePath);
+        $equipment->update(['img_url' => $filePath]);
 
         return response()->json([
             'message' => "Udało się zakutualizować obrazek sprzętu $equipment->name."

@@ -1,20 +1,20 @@
 <div [ngSwitch]="rentDetail.equipment.length" class="container mx-auto mt-5"
   [@switchTrigger]="rentDetail.equipment.length">
   <div *ngSwitchCase="0" class="card">
-    <div class="flex flex-col items-center mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow">
-      <h5 class="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900">Koszyk jest pusty</h5>
+    <div class="flex flex-col items-center p-6 mx-auto bg-white border border-gray-200 rounded-lg shadow">
+      <h5 class="mb-2 text-2xl font-bold tracking-tight text-center text-gray-900">Koszyk jest pusty</h5>
       <p-button label="Przejdź do oferty" [routerLink]="['/oferta']"></p-button>
     </div>
   </div>
 
   <div *ngSwitchDefault="" class="card">
     <p-card header="Koszyk">
-      <div class="flex flex-col lg:flex-row gap-2">
+      <div class="flex flex-col gap-2 lg:flex-row">
         <div class="w-full mb-4 lg:w-3/4 lg:mb-0">
           <div *ngFor="let equip of rentDetail.equipment">
             <div class="flex flex-row border-y py-6 mt-[-1px]">
-              <div [ngSwitch]="!equip.image_url" class="w-32">
-                <img *ngSwitchCase="false" [src]="equip.image_url" alt="sprzęt" class="w-32 h-12">
+              <div [ngSwitch]="!equip.img_url" class="w-32">
+                <img *ngSwitchCase="false" [src]="equip.img_url" alt="sprzęt" class="w-32 h-12">
                 <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-32 h-12">
               </div>
               <div class="grow">
@@ -36,7 +36,7 @@
                   </button>
                 </div>
               </div>
-              <div class="w-32 flex">
+              <div class="flex w-32">
                 <div class="my-auto">{{ equip.price | currency }}</div>
               </div>
               <div class="w-12">
@@ -51,8 +51,8 @@
           </div>
         </div>
 
-        <div class="w-full lg:w-1/4 flex">
-          <div class="mx-auto mb-auto border border-gray-200 rounded-lg p-10">
+        <div class="flex w-full lg:w-1/4">
+          <div class="p-10 mx-auto mb-auto border border-gray-200 rounded-lg">
             <p class="mb-2 text-lg font-semibold">Wybierz datę wypożyczenia</p>
 
             <form [formGroup]="dateForm">

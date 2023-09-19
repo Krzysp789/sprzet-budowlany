@@ -10,8 +10,8 @@
     </ng-template>
 
     <ng-template pTemplate="content">
-      <div class="flex gap-5 mb-5" [ngSwitch]="!equipment?.image_url">
-        <img *ngSwitchCase="false" [src]="equipment?.image_url" alt="sprzęt" class="w-[300px] h-[300px] mr-5">
+      <div class="flex gap-5 mb-5" [ngSwitch]="!equipment?.img_url">
+        <img *ngSwitchCase="false" [src]="equipment?.img_url" alt="sprzęt" class="w-[300px] h-[300px] mr-5">
         <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-[300px] h-[300px] mr-5">
         <div>
           <ul class="mb-5 space-y-1 text-[#71717A] list-none list-inside">
@@ -60,7 +60,7 @@
       </div>
 
       <div class="mb-2">
-        <span class="font-bold text-xl text-gray-600">Przedmioty</span>
+        <span class="text-xl font-bold text-gray-600">Przedmioty</span>
       </div>
 
       <p-table #dt1 [value]="items" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
@@ -72,7 +72,7 @@
             <p-button (click)="showDialog()" label="Dodaj przedmiot" styleClass="p-button-success"
               icon="pi pi-plus"></p-button>
 
-            <span class="p-input-icon-left ml-auto relative">
+            <span class="relative ml-auto p-input-icon-left">
               <i class="pi pi-search"></i>
               <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
                 placeholder="Szukaj" #globalFilter />

@@ -26,8 +26,8 @@
       <ng-template let-equip pTemplate="listItem">
         <div class="cell">
           <a [routerLink]="[equip.id]" class="flex border-y mt-[-1px] gap-6 p-8 w-full hover:bg-zinc-100/100">
-            <div [ngSwitch]="!equip.image_url" class="mr-3">
-              <img *ngSwitchCase="false" [src]="equip.image_url" alt="sprzęt" class="w-[100px] h-[100px]" />
+            <div [ngSwitch]="!equip.img_url" class="mr-3">
+              <img *ngSwitchCase="false" [src]="equip.img_url" alt="sprzęt" class="w-[100px] h-[100px]" />
               <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-[100px] h-[100px]" />
             </div>
 
@@ -49,8 +49,8 @@
       <ng-template let-equip pTemplate="gridItem" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <a [routerLink]="[equip.id]" class="flex flex-col justify-center w-full p-4 border-y hover:bg-zinc-100/100">
-            <div [ngSwitch]="!equip.image_url" class="mx-auto">
-              <img *ngSwitchCase="false" [src]="equip.image_url" alt="sprzęt" class="w-[200px] h-[200px]" />
+            <div [ngSwitch]="!equip.img_url" class="mx-auto">
+              <img *ngSwitchCase="false" [src]="equip.img_url" alt="sprzęt" class="w-[200px] h-[200px]" />
               <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-[200px] h-[200px]" />
             </div>
 

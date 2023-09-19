@@ -9,7 +9,7 @@
           <p-button *ngIf="admin" (click)="showDialog()" label="Dodaj sprzęt" styleClass="p-button-success"
             icon="pi pi-plus"></p-button>
 
-          <span class="p-input-icon-left ml-auto relative">
+          <span class="relative ml-auto p-input-icon-left">
             <i class="pi pi-search"></i>
             <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
               placeholder="Szukaj" #globalFilter />
@@ -45,8 +45,8 @@
       <ng-template pTemplate="body" let-equip>
         <tr>
           <td>{{equip.id}}</td>
-          <td [ngSwitch]="!equip.image_url">
-            <img *ngSwitchCase="false" [src]="equip.image_url" alt="sprzęt" class="w-[50px] h-[40px]">
+          <td [ngSwitch]="!equip.img_url">
+            <img *ngSwitchCase="false" [src]="equip.img_url" alt="sprzęt" class="w-[50px] h-[40px]">
             <img *ngSwitchCase="true" src="/assets/images/empty.svg" alt="sprzęt" class="w-[50px] h-[40px]">
           </td>
           <td>{{equip.name}}</td>

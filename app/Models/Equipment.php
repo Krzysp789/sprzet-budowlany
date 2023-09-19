@@ -14,6 +14,7 @@ class Equipment extends Model
         'name',
         'price',
         'description',
+        'img_url',
     ];
 
     public function items()

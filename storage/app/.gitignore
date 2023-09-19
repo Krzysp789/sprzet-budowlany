@@ -1,6 +1,6 @@
 *
 !public/
-!eqImg/
+!img_eq/
 !exampleEq/
 !exampleEq/*
 !.gitignore

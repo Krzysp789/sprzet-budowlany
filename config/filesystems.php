@@ -36,18 +36,10 @@ return [
             'throw' => false,
         ],
 
-        'eqImg' => [
+        'imgEq' => [
             'driver' => 'local',
-            'root' => storage_path('app/eqImg'),
-            'url' => env('APP_URL') . '/eqImg',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
-
-        'public' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL') . '/storage',
+            'root' => storage_path('app/img_eq'),
+            'url' => env('APP_URL') . '/images_equipment',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -78,8 +70,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
-        public_path('eqImg') => storage_path('app/eqImg'),
+        public_path('images_equipment') => storage_path('app/img_eq'),
     ],
 
 ];

@@ -50,13 +50,6 @@ class SelfRentController extends Controller
             $offer = $offer->skip($request->first)->take($request->rows)->values();
         }
 
-        $offer->each(function ($equip) {
-            if (!empty(Storage::disk('eqImg')->files($equip->id))) {
-                $equip->image_url = Storage::disk('eqImg')
-                    ->url(Storage::disk('eqImg')->files($equip->id)[0]);
-            }
-        });
-
         return response()->json(new EquipmentCollection($offer, $total));
     }
 
@@ -67,10 +60,7 @@ class SelfRentController extends Controller
                 $query->where('status', 'dostępny');
             },
         ])->findOrFail($equipment->id);
-        if (!empty(Storage::disk('eqImg')->files($equipment->id))) {
-            $offer->image_url = Storage::disk('eqImg')
-                ->url(Storage::disk('eqImg')->files($equipment->id)[0]);
-        }
+
         return response()->json(new EquipmentResource($offer));
     }
 

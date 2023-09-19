@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 45);
             $table->decimal('price', 10, 2, true);
             $table->string('description', 255)->nullable();
+            $table->string('img_url', 90)->nullable();
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
