@@ -27,9 +27,9 @@ use App\Http\Controllers\RentalEquipmentController;
 */
 
 Route::controller(AuthController::class)->group(function () {
-    Route::post('register', 'register');
-    Route::post('login', 'login');
-    Route::post('logout', 'logout');
+    Route::post('register', 'register')->middleware('guest');
+    Route::post('login', 'login')->middleware('guest');
+    Route::post('logout', 'logout')->middleware('auth');
     Route::get('user', 'user')->middleware(['auth:sanctum']);
     Route::get('user/searchEmail', 'searchEmail');
 });

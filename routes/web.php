@@ -15,5 +15,8 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return [
+        'Laravel' => app()->version(),
+        'PHP' => phpversion()
+    ];
 });
