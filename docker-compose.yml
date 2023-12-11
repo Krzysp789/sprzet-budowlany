@@ -10,7 +10,7 @@ services:
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
-            - '${APP_PORT:-80}:8000'
+            - '${APP_PORT:-8000}:80'
         container_name: laravel-sprzet_budowlany
         environment:
             WWWUSER: '${WWWUSER}'
@@ -57,7 +57,8 @@ services:
             - "4200:4200"
         container_name: angular-sprzet_budowlany
         volumes:
-            - './frontend:/usr/src/app/app-angular'
+            - './frontend:/usr/src/app'
+            - '/usr/src/app/node_modules'
 networks:
     sail:
         driver: bridge
