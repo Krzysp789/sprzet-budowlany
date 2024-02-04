@@ -15,7 +15,7 @@ import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-offer',
   templateUrl: './offer-list.component.html',
-  styleUrls: []
+  styles: ['.w-calc { width: calc(100% - 516px); }']
 })
 export class OfferListComponent implements OnInit {
   equipment: Collection<Equipment> = { data: [], total: 0 };
