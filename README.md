@@ -8,5 +8,12 @@ The application allows to:
 ## run via docker
 
 ```
+$ cp .env.example .env
 $ docker compose up
+```
+In laravel conteiner run
+```
+$ php artisan migrate --seed
+$ php artisan key:generate
+$ php artisan storage:link
 ```
