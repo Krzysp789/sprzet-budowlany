@@ -1,19 +1,16 @@
 <?php
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-namespace Tests\Feature;
+pest()->use(RefreshDatabase::class);
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+test('returns a successful response', function () {
+    $response = $this->get('/');
 
-class ExampleTest extends TestCase
-{
-    /**
-     * A basic test example.
-     */
-    public function test_the_application_returns_a_successful_response(): void
-    {
-        $response = $this->get('/');
+    $response->assertOk();
+});
 
-        $response->assertStatus(200);
-    }
-}
+test('address factory', function () {
+    \App\Models\Customer::factory()->count(20)->create();
+    $result = \App\Models\Customer::all()->count();
+    $this->assertEquals(20, $result);
+});
