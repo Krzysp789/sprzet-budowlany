@@ -6,14 +6,14 @@ The application allows to:
 - data management from the panel for employees
 
 ## run via docker
-
+In terminal run
 ```
-$ cp .env.example .env
-$ docker compose up
+cp .env.example .env
+docker compose up
 ```
 In laravel conteiner run
 ```
-$ php artisan migrate --seed
-$ php artisan key:generate
-$ php artisan storage:link
+php artisan migrate --seed
+php artisan key:generate
+php artisan storage:link
 ```
