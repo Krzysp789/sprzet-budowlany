@@ -9,11 +9,13 @@ The application allows to:
 In terminal run
 ```
 cp .env.example .env
-docker compose up
+docker compose up -d
 ```
 In laravel conteiner run
 ```
+composer i
 php artisan migrate --seed
 php artisan key:generate
 php artisan storage:link
 ```
+Then restart the laravel container
