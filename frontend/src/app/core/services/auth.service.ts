@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   setToken(): Observable<any> {
-    return this.httpClient.get(`//localhost:8000/sanctum/csrf-cookie`, this.options);
+    return this.httpClient.get(`${env.baseUrl}/sanctum/csrf-cookie`, this.options);
   }
 
   register(data: any): Observable<any> {
