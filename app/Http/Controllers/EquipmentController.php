@@ -121,7 +121,7 @@ class EquipmentController extends Controller
             ], 422);
         }
         if ($equipment->img_url)
-            Storage::disk('imgEq')->delete($equipment->img_url);
+            Storage::disk('img_eq')->delete($equipment->img_url);
 
         $filePath = "$equipment->id.{$request->file('image')->extension()}";
         Storage::putFileAs("img_eq", $request->file('image'), $filePath);

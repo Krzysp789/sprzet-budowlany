@@ -36,7 +36,7 @@ return [
             'throw' => false,
         ],
 
-        'imgEq' => [
+        'img_eq' => [
             'driver' => 'local',
             'root' => storage_path('app/img_eq'),
             'url' => env('APP_URL') . '/images_equipment',

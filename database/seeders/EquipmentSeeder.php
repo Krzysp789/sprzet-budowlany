@@ -14,8 +14,8 @@ class EquipmentSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (Storage::disk('imgEq')->files() as $img) {
-            if ($img != '.gitignore') Storage::disk('imgEq')->delete($img);
+        foreach (Storage::disk('img_eq')->files() as $img) {
+            if ($img != '.gitignore') Storage::disk('img_eq')->delete($img);
         };
         Equipment::factory()->count(50)->create()->each(function ($equipment) {
             $file = Storage::allFiles('exampleEq');

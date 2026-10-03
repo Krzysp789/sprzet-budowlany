@@ -90,9 +90,8 @@ class SelfRentController extends Controller
 
         $rentals->each(function ($rental) {
             $rental->equipment->each(function ($equip) {
-                if (!empty(Storage::disk('eqImg')->files($equip['id']))) {
-                    $equip['image_url'] = Storage::disk('eqImg')
-                        ->url(Storage::disk('eqImg')->files($equip['id'])[0]);
+                if (!empty(Storage::disk('img_eq')->get($equip['img_url']))) {
+                    $equip['image_url'] = Storage::disk('img_eq')->url($equip['img_url']);
                 }
             });
         });

@@ -26,7 +26,7 @@ class EquipmentResource extends JsonResource
             'items_count' => $this->whenCounted('items'),
             'available_items_count' => $this->whenCounted('available_items_count'),
             'items' => ItemResource::collection($this->whenLoaded('items')),
-            'img_url' => Storage::disk('imgEq')->url($this->img_url)
+            'img_url' => Storage::disk('img_eq')->url($this->img_url)
         ];
     }
 }
