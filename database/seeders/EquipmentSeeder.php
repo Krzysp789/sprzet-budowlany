@@ -26,8 +26,7 @@ class EquipmentSeeder extends Seeder
                 'img_url' => $filePath
             ]);
             for ($i = 0; $i < fake()->numberBetween(0, 10); $i++) {
-                $item = Item::factory()->create();
-                $item->update(['equipment_id' => $equipment->id]);
+                Item::factory(['equipment_id' => $equipment->id])->create();
             }
         });
     }
