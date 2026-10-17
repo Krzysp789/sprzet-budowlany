@@ -38,7 +38,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request): JsonResponse
     {
         if (Auth::attempt($request->only('email', 'password'))) {
-            $request->session()->regenerate();
+//            $request->session()->regenerate();
             return response()->json(collect(new UserResource($request->user()))
                 ->merge(['roles' => $request->user()->getRoleNames()]));
         }
@@ -53,7 +53,7 @@ class AuthController extends Controller
     {
         if (Auth::user()) {
             Auth::logout();
-            $request->session()->invalidate();
+//            $request->session()->invalidate();
             return response()->json([
                 'header' => 'wylogowano pomyślnie',
             ]);
