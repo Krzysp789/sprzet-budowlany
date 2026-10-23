@@ -72,7 +72,7 @@ class CategoryController extends Controller
     {
         if (!$category->equipment->isEmpty()) {
             return response()->json([
-                'message' => "Nie można usuniąć kategorii $category->name ponieważ ma przypisane sprzęty."
+                'message' => "Nie można usunąć kategorii $category->name ponieważ ma przypisane sprzęty."
             ], 409);
         }
         $category->delete();
